@@ -1,0 +1,31 @@
+property:
+  test:
+    name: property depth test
+propertyTest: test
+propertyTestList: a,b,c
+
+fruit:
+  list:
+    - name: banana
+      color: yellow
+    - name: apple
+      color: red
+    - name: water melon
+      color: green
+
+fruit-property.color-name: red
+fruit-property.color_name: red
+fruit-property.colorName: red
+fruit-property.colorname: red
+
+datasource:
+  driver-class-name: org.h2.Driver
+  url: jdbc:h2:~/test
+  username: sa
+  password:
+
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
