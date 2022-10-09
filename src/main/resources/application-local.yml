@@ -13,11 +13,10 @@ spring:
     activate:
       on-profile: local
   datasource:
-#    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/testdb?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
     username: root
     password: 1234
+#    type: com.zaxxer.hikari.HikariDataSource
 #    hikari:
 #      poolName: Hikari
 #      auto-commit: false
@@ -35,7 +34,7 @@ spring:
       hibernate.show_sql: true
       hibernate.format_sql: true
       hibernate.use_sql_comments: true
-    hibernate:
-      ddl-auto: none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+#    hibernate:
+#      ddl-auto: none
+#      naming:
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
