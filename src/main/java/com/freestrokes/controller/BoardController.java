@@ -22,19 +22,19 @@ public class BoardController {
         return new ResponseEntity<List<BoardDto>>(result, HttpStatus.OK);
     }
 
-    @PostMapping(path = "/api/v1/board", produces = "application/json")
+    @PostMapping(path = "/api/v1/boards", produces = "application/json")
     public ResponseEntity<Board> postBoard(@RequestBody BoardDto boardDto) throws Exception {
         Board result = boardService.postBoard(boardDto);
         return new ResponseEntity<Board>(result, HttpStatus.OK);
     }
 
-    @PutMapping(path = "/api/v1/board/{id}", produces = "application/json")
+    @PutMapping(path = "/api/v1/boards/{id}", produces = "application/json")
     public ResponseEntity<Board> putBoard(@PathVariable Long id, @RequestBody BoardDto boardDto) throws Exception {
         Board result = boardService.putBoard(id, boardDto);
         return new ResponseEntity<Board>(result, HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "/api/v1/board/{id}", produces = "application/json")
+    @DeleteMapping(path = "/api/v1/boards/{id}", produces = "application/json")
     public void deleteBoard(@PathVariable Long id) throws Exception {
         boardService.deleteBoard(id);
     }

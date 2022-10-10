@@ -24,16 +24,10 @@ public class Board {
     @Column(length = 100)
     private String author;
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
+    public void update(Board board) {
+        this.title = board.getTitle();
+        this.content = board.getContent();
+        this.author = board.getAuthor();
     }
 
     @Builder

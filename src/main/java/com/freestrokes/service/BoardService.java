@@ -26,16 +26,21 @@ public class BoardService {
     }
 
     public Board putBoard(Long id, BoardDto boardDto) throws Exception {
-        Optional<Board> board = boardRepository.findById(id);
+        Optional<Board> persistBoard = boardRepository.findById(id);
 
-        if (board.isPresent()) {
-            board.get().setTitle(boardDto.getTitle());
-            board.get().setContent(boardDto.getContent());
-            board.get().setAuthor(boardDto.getAuthor());
-            boardRepository.save(board.get());
+        if (persistBoard.isPresent()) {
+            Board board = Board.builder()
+                    .title(boardDto.getTitle())
+                    .content(boardDto.getContent())
+                    .author(boardDto.getAuthor())
+                    .build();
+
+            persistBoard.get().update(board);
+
+            boardRepository.save(persistBoard.get());
         }
 
-        return board.get();
+        return persistBoard.get();
     }
 
     public void deleteBoard(Long id) throws Exception {
