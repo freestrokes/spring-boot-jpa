@@ -1,9 +1,12 @@
 package com.freestrokes.controller;
 
+import com.freestrokes.domain.Board;
+import com.freestrokes.dto.BoardDto;
 import com.freestrokes.service.BoardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,11 +17,26 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping(path = "/api/v1/boards", produces = "application/json")
-    public List getBoardList() throws Exception {
+    public ResponseEntity<List<BoardDto>> getBoards() throws Exception {
+        List<BoardDto> result = boardService.getBoards();
+        return new ResponseEntity<List<BoardDto>>(result, HttpStatus.OK);
+    }
 
-        List boardList = boardService.getBoardList();
+    @PostMapping(path = "/api/v1/board", produces = "application/json")
+    public ResponseEntity<Board> postBoard(@RequestBody BoardDto boardDto) throws Exception {
+        Board result = boardService.postBoard(boardDto);
+        return new ResponseEntity<Board>(result, HttpStatus.OK);
+    }
 
-        return boardList;
+    @PutMapping(path = "/api/v1/board/{id}", produces = "application/json")
+    public ResponseEntity<Board> putBoard(@PathVariable Long id, @RequestBody BoardDto boardDto) throws Exception {
+        Board result = boardService.putBoard(id, boardDto);
+        return new ResponseEntity<Board>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/api/v1/board/{id}", produces = "application/json")
+    public void deleteBoard(@PathVariable Long id) throws Exception {
+        boardService.deleteBoard(id);
     }
 
 }
