@@ -35,8 +35,9 @@ public class BoardController {
     }
 
     @DeleteMapping(path = "/api/v1/boards/{id}", produces = "application/json")
-    public void deleteBoard(@PathVariable Long id) throws Exception {
+    public ResponseEntity<?> deleteBoard(@PathVariable Long id) throws Exception {
         boardService.deleteBoard(id);
+        return new ResponseEntity<>("{}", HttpStatus.OK);
     }
 
 }
