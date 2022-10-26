@@ -17,9 +17,9 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping(path = "/api/v1/boards", produces = "application/json")
-    public ResponseEntity<List<BoardDto>> getBoards() throws Exception {
-        List<BoardDto> result = boardService.getBoards();
-        return new ResponseEntity<List<BoardDto>>(result, HttpStatus.OK);
+    public ResponseEntity<List<Board>> getBoards() throws Exception {
+        List<Board> result = boardService.getBoards();
+        return new ResponseEntity<List<Board>>(result, HttpStatus.OK);
     }
 
     @PostMapping(path = "/api/v1/boards", produces = "application/json")
