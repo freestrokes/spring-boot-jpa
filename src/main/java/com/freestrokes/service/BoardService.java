@@ -15,8 +15,8 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public List getBoards() throws Exception {
-        List result = boardRepository.findAll();
+    public List<Board> getBoards() throws Exception {
+        List<Board> result = boardRepository.findAll();
         return result;
     }
 
