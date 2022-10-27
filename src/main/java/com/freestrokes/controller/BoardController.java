@@ -1,6 +1,5 @@
 package com.freestrokes.controller;
 
-import com.freestrokes.domain.Board;
 import com.freestrokes.dto.BoardDto;
 import com.freestrokes.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -17,21 +16,21 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping(path = "/api/v1/boards", produces = "application/json")
-    public ResponseEntity<List<Board>> getBoards() throws Exception {
-        List<Board> result = boardService.getBoards();
-        return new ResponseEntity<List<Board>>(result, HttpStatus.OK);
+    public ResponseEntity<List<BoardDto.ResponseDto>> getBoards() throws Exception {
+        List<BoardDto.ResponseDto> result = boardService.getBoards();
+        return new ResponseEntity<List<BoardDto.ResponseDto>>(result, HttpStatus.OK);
     }
 
     @PostMapping(path = "/api/v1/boards", produces = "application/json")
-    public ResponseEntity<Board> postBoard(@RequestBody BoardDto boardDto) throws Exception {
-        Board result = boardService.postBoard(boardDto);
-        return new ResponseEntity<Board>(result, HttpStatus.OK);
+    public ResponseEntity<BoardDto.ResponseDto> postBoard(@RequestBody BoardDto.RequestDto boardDto) throws Exception {
+        BoardDto.ResponseDto result = boardService.postBoard(boardDto);
+        return new ResponseEntity<BoardDto.ResponseDto>(result, HttpStatus.OK);
     }
 
     @PutMapping(path = "/api/v1/boards/{id}", produces = "application/json")
-    public ResponseEntity<Board> putBoard(@PathVariable Long id, @RequestBody BoardDto boardDto) throws Exception {
-        Board result = boardService.putBoard(id, boardDto);
-        return new ResponseEntity<Board>(result, HttpStatus.OK);
+    public ResponseEntity<BoardDto.ResponseDto> putBoard(@PathVariable Long id, @RequestBody BoardDto.RequestDto boardDto) throws Exception {
+        BoardDto.ResponseDto result = boardService.putBoard(id, boardDto);
+        return new ResponseEntity<BoardDto.ResponseDto>(result, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/api/v1/boards/{id}", produces = "application/json")
