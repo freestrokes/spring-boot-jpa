@@ -22,6 +22,7 @@ public class BoardService {
             .stream()
             .map(item -> {
                 return BoardDto.ResponseDto.builder()
+                    .id(item.getId())
                     .title(item.getTitle())
                     .content(item.getContent())
                     .author(item.getAuthor())
@@ -36,6 +37,7 @@ public class BoardService {
         Board board = boardRepository.save(boardRequestDto.toEntity());
 
         BoardDto.ResponseDto boardDto = BoardDto.ResponseDto.builder()
+            .id(board.getId())
             .title(board.getTitle())
             .content(board.getContent())
             .author(board.getAuthor())
@@ -62,6 +64,7 @@ public class BoardService {
         }
 
         BoardDto.ResponseDto boardDto = BoardDto.ResponseDto.builder()
+            .id(persistBoard.get().getId())
             .title(persistBoard.get().getTitle())
             .content(persistBoard.get().getContent())
             .author(persistBoard.get().getAuthor())
