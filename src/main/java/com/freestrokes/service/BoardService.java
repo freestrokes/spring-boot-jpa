@@ -7,7 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -15,32 +17,58 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public List<Board> getBoards() throws Exception {
-        List<Board> result = boardRepository.findAll();
-        return result;
+    public List<BoardDto.ResponseDto> getBoards() throws Exception {
+        List<BoardDto.ResponseDto> boardsDto = boardRepository.findAll()
+            .stream()
+            .map(item -> {
+                return BoardDto.ResponseDto.builder()
+                    .title(item.getTitle())
+                    .content(item.getContent())
+                    .author(item.getAuthor())
+                    .build();
+            })
+            .collect(Collectors.toList());
+
+        return boardsDto;
     }
 
-    public Board postBoard(BoardDto boardDto) throws Exception {
-        Board board = boardRepository.save(boardDto.toEntity());
-        return board;
+    public BoardDto.ResponseDto postBoard(BoardDto.RequestDto boardRequestDto) throws Exception {
+        Board board = boardRepository.save(boardRequestDto.toEntity());
+
+        BoardDto.ResponseDto boardDto = BoardDto.ResponseDto.builder()
+            .title(board.getTitle())
+            .content(board.getContent())
+            .author(board.getAuthor())
+            .build();
+
+        return boardDto;
     }
 
-    public Board putBoard(Long id, BoardDto boardDto) throws Exception {
+    public BoardDto.ResponseDto putBoard(Long id, BoardDto.RequestDto boardRequestDto) throws Exception {
         Optional<Board> persistBoard = boardRepository.findById(id);
 
         if (persistBoard.isPresent()) {
             Board board = Board.builder()
-                    .title(boardDto.getTitle())
-                    .content(boardDto.getContent())
-                    .author(boardDto.getAuthor())
-                    .build();
+                .title(boardRequestDto.getTitle())
+                .content(boardRequestDto.getContent())
+                .author(boardRequestDto.getAuthor())
+                .build();
 
             persistBoard.get().update(board);
 
             boardRepository.save(persistBoard.get());
+        } else {
+            throw new NoSuchElementException();
         }
 
-        return persistBoard.get();
+        BoardDto.ResponseDto boardDto = BoardDto.ResponseDto.builder()
+            .title(persistBoard.get().getTitle())
+            .content(persistBoard.get().getContent())
+            .author(persistBoard.get().getAuthor())
+            .build();
+
+        return boardDto;
+
     }
 
     public void deleteBoard(Long id) throws Exception {
