@@ -42,16 +42,19 @@ public class BoardDto {
 
     @Getter
     public static class ResponseDto {
+        private Long id;
         private String title;
         private String content;
         private String author;
 
         @Builder
         public ResponseDto(
+            Long id,
             String title,
             String content,
             String author
         ) {
+            this.id = id;
             this.title = title;
             this.content = content;
             this.author = author;
