@@ -49,6 +49,10 @@ public class BoardService {
     public BoardDto.ResponseDto putBoard(Long id, BoardDto.RequestDto boardRequestDto) throws Exception {
         Optional<Board> persistBoard = boardRepository.findById(id);
 
+//        persistBoard.ifPresent(board -> {
+//           // TODO
+//        });
+
         if (persistBoard.isPresent()) {
             Board board = Board.builder()
                 .title(boardRequestDto.getTitle())
