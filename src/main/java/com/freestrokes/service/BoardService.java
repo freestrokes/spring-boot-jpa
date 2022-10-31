@@ -18,7 +18,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     public List<BoardDto.ResponseDto> getBoards() throws Exception {
-        List<BoardDto.ResponseDto> boardsDto = boardRepository.findAll()
+        List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll()
             .stream()
             .map(item -> {
                 return BoardDto.ResponseDto.builder()
@@ -30,20 +30,20 @@ public class BoardService {
             })
             .collect(Collectors.toList());
 
-        return boardsDto;
+        return boardsResponseDto;
     }
 
     public BoardDto.ResponseDto postBoard(BoardDto.RequestDto boardRequestDto) throws Exception {
         Board board = boardRepository.save(boardRequestDto.toEntity());
 
-        BoardDto.ResponseDto boardDto = BoardDto.ResponseDto.builder()
+        BoardDto.ResponseDto boardResponseDto = BoardDto.ResponseDto.builder()
             .id(board.getId())
             .title(board.getTitle())
             .content(board.getContent())
             .author(board.getAuthor())
             .build();
 
-        return boardDto;
+        return boardResponseDto;
     }
 
     public BoardDto.ResponseDto putBoard(Long id, BoardDto.RequestDto boardRequestDto) throws Exception {
@@ -67,14 +67,14 @@ public class BoardService {
             throw new NoSuchElementException();
         }
 
-        BoardDto.ResponseDto boardDto = BoardDto.ResponseDto.builder()
+        BoardDto.ResponseDto boardResponseDto = BoardDto.ResponseDto.builder()
             .id(persistBoard.get().getId())
             .title(persistBoard.get().getTitle())
             .content(persistBoard.get().getContent())
             .author(persistBoard.get().getAuthor())
             .build();
 
-        return boardDto;
+        return boardResponseDto;
 
     }
 
