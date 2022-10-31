@@ -36,6 +36,16 @@ public class BoardService {
     public BoardDto.ResponseDto postBoard(BoardDto.RequestDto boardRequestDto) throws Exception {
         Board board = boardRepository.save(boardRequestDto.toEntity());
 
+        // Optional을 이용한 중복 체크
+//        Optional<Board> existBoard = boardRepository.findByTitle(boardRequestDto.getTitle());
+//        existBoard.ifPresent(item -> {
+//            try {
+//                throw new Exception();
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
+
         BoardDto.ResponseDto boardResponseDto = BoardDto.ResponseDto.builder()
             .id(board.getId())
             .title(board.getTitle())
@@ -48,10 +58,6 @@ public class BoardService {
 
     public BoardDto.ResponseDto putBoard(Long id, BoardDto.RequestDto boardRequestDto) throws Exception {
         Optional<Board> persistBoard = boardRepository.findById(id);
-
-//        persistBoard.ifPresent(board -> {
-//           // TODO
-//        });
 
         if (persistBoard.isPresent()) {
             Board board = Board.builder()
