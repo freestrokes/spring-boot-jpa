@@ -13,15 +13,16 @@ public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Column(length = 500)
+    @Column(name = "title", length = 500)
     private String title;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
-    @Column(length = 100)
+    @Column(name = "author", length = 100)
     private String author;
 
     public void update(Board board) {
