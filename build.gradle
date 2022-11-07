@@ -19,6 +19,7 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-jdbc"
 	implementation 'mysql:mysql-connector-java'
 	implementation "junit:junit:4.13.2"
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.12'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compileOnly 'org.projectlombok:lombok'
 //	runtimeOnly "com.h2database:h2"
