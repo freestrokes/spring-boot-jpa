@@ -6,4 +6,4 @@ springdoc:
   swagger-ui:
     operations-sorter: alpha
     tags-sorter: alpha
-    path: /swagger-ui
+    path: /swagger-ui.html
