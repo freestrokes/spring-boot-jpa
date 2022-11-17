@@ -20,7 +20,7 @@ public class BoardDto {
         private String content;
         private String author;
 
-        @Builder
+        @Builder(toBuilder = true)
         public RequestDto(
             String title,
             String content,
@@ -47,7 +47,7 @@ public class BoardDto {
         private String content;
         private String author;
 
-        @Builder
+        @Builder(toBuilder = true)
         public ResponseDto(
             Long id,
             String title,

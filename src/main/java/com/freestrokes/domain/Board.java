@@ -31,7 +31,7 @@ public class Board {
         this.author = board.getAuthor();
     }
 
-    @Builder
+    @Builder(toBuilder = true)
     public Board(
         String title,
         String content,
