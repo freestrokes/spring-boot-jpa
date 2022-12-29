@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Data
@@ -13,68 +15,29 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
 public class ApplicationProperties {
 
-    private String tempPath;
-    private Email email;
-    private Ui ui;
-    private Storage storage;
-    private Bts bts;
-    private Metering metering;
-    private Pager pager;
+    private String endpoint;
+    private User user;
+    private Property property;
 
     @Getter
     @Setter
-    public static class Email {
-        private String endpoint;
+    public static class User {
+        private String name;
+        private String age;
+        private String gender;
     }
 
     @Getter
     @Setter
-    public static class Ui {
-        private String success;
-        private String error;
+    public static class Property {
+        private Test test;
     }
 
     @Getter
     @Setter
-    public static class Storage {
-        private String account;
-        private String password;
-        private String domain;
-        private String project;
-        private String projectId;
-        private String bucketName;
-        private String imageBucketName;
-        private String endpoint;
-        private String authEndpoint;
+    public static class Test {
+        private List<String> list;
     }
 
-    @Getter
-    @Setter
-    public static class Bts {
-        private String id;
-        private String secret;
-        private String sphinx;
-        private String kkanbu;
-        private String nimbus;
-        private String daitso;
-        private String universe;
-    }
-
-    @Getter
-    @Setter
-    public static class Metering {
-
-        private String serviceId;
-
-        private int productId;
-
-        private String regionCode;
-    }
-
-    @Getter
-    @Setter
-    public static class Pager {
-        private String endpoint;
-    }
 }
 

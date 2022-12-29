@@ -1,5 +1,6 @@
 package com.freestrokes.controller;
 
+import com.freestrokes.config.ApplicationProperties;
 import com.freestrokes.dto.BoardDto;
 import com.freestrokes.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +15,17 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class BoardController {
 
+    // TODO
+    private final ApplicationProperties applicationProperties;
+
     private final BoardService boardService;
 
     @GetMapping(path = "/boards", produces = "application/json")
     public ResponseEntity<List<BoardDto.ResponseDto>> getBoards() throws Exception {
+
+        // TODO
+        System.out.println("applicationProperties: " + applicationProperties);
+
         List<BoardDto.ResponseDto> result = boardService.getBoards();
         return new ResponseEntity<List<BoardDto.ResponseDto>>(result, HttpStatus.OK);
     }
