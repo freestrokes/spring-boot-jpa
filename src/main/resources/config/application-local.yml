@@ -4,6 +4,16 @@
 # This configuration overrides the application.yml file.
 # ============================================================
 
+application:
+  endpoint: https://freestrokes.tistory.com/
+  user:
+    name: freestrokes
+    age: 30
+    gender: male
+  property:
+    test:
+      list: a,b,c
+
 server:
   port: 8081
 
@@ -16,25 +26,6 @@ logging:
 #    com.kakaoi.mpc: DEBUG
 #    com.kakaoi.mpc.web.rest.HealthController: ERROR
 #    okhttp3.internal.http2: ERROR
-
-application:
-  endpoint: https://freestrokes.tistory.com/
-  user:
-    name: freestrokes
-    age: 30
-    gender: male
-  property:
-    test:
-      list: a,b,c
-
-#  fruit:
-#    list:
-#      - name: banana
-#        color: yellow
-#      - name: apple
-#        color: red
-#      - name: water melon
-#        color: green
 
 spring:
   config:
