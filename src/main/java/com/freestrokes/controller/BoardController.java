@@ -1,5 +1,6 @@
 package com.freestrokes.controller;
 
+import com.freestrokes.aop.LogExecutionTime;
 import com.freestrokes.config.ApplicationProperties;
 import com.freestrokes.dto.BoardDto;
 import com.freestrokes.service.BoardService;
