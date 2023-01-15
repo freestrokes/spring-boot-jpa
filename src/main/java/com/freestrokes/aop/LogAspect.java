@@ -1,4 +1,4 @@
-package com.freestrokes.controller;
+package com.freestrokes.aop;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -16,9 +16,9 @@ public class LogAspect {
 
     // @Around
     // ProceedingJoinPoint를 파라미터로 받을 수 있는데 이건 해당 어노테이션이 붙은 메서드를 받아오도록 동작.
-    // 아래와 같이 execution을 사용하면 해당 패키지 하위 모든 클래스에 적용
+    // @Around("execution(* com.freestrokes..*(..))") 이와 같이 execution을 사용하면 해당 패키지 하위 모든 클래스에 적용
 
-    @Around("@annotation(LogExecutionTime)")
+    @Around("@annotation(com.freestrokes.aop.LogExecutionTime)")
 //    @Around("execution(* com.freestrokes..*(..))")
     public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
         StopWatch stopWatch = new StopWatch();

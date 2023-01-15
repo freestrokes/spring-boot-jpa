@@ -1,4 +1,4 @@
-package com.freestrokes.controller;
+package com.freestrokes.aop;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
