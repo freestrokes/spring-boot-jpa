@@ -22,7 +22,7 @@ public class BoardService {
             .stream()
             .map(item -> {
                 return BoardDto.ResponseDto.builder()
-                    .id(item.getId())
+                    .boardId(item.getBoardId())
                     .title(item.getTitle())
                     .content(item.getContent())
                     .author(item.getAuthor())
@@ -36,7 +36,7 @@ public class BoardService {
     public BoardDto.ResponseDto postBoard(BoardDto.RequestDto boardRequestDto) throws Exception {
         Board board = boardRepository.save(boardRequestDto.toEntity());
 
-        // Optional을 이용한 중복 체크
+        // TODO: Optional을 이용한 중복 체크가 필요한 경우 아래와 같이 사용.
 //        Optional<Board> existBoard = boardRepository.findByTitle(boardRequestDto.getTitle());
 //        existBoard.ifPresent(item -> {
 //            try {
@@ -47,7 +47,7 @@ public class BoardService {
 //        });
 
         BoardDto.ResponseDto boardResponseDto = BoardDto.ResponseDto.builder()
-            .id(board.getId())
+            .boardId(board.getBoardId())
             .title(board.getTitle())
             .content(board.getContent())
             .author(board.getAuthor())
@@ -74,7 +74,7 @@ public class BoardService {
         }
 
         BoardDto.ResponseDto boardResponseDto = BoardDto.ResponseDto.builder()
-            .id(persistBoard.get().getId())
+            .boardId(persistBoard.get().getBoardId())
             .title(persistBoard.get().getTitle())
             .content(persistBoard.get().getContent())
             .author(persistBoard.get().getAuthor())
