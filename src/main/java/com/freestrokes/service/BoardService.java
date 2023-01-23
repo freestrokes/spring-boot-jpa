@@ -26,6 +26,7 @@ public class BoardService {
                     .title(item.getTitle())
                     .content(item.getContent())
                     .author(item.getAuthor())
+                    .boardComments(item.getBoardComments())
                     .build();
             })
             .collect(Collectors.toList());

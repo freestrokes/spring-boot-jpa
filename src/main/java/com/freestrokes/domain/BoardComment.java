@@ -14,7 +14,7 @@ public class BoardComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_comment_id", unique = true, nullable = false)
-    private Long board_comment_id;
+    private Long boardCommentId;
 
     // TODO: FetchType 확인 필요
     @ManyToOne(fetch = FetchType.LAZY)
