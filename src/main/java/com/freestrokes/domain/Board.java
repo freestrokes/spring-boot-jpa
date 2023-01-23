@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -13,8 +14,11 @@ public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    private Long id;
+    @Column(name = "board_id", unique = true, nullable = false)
+    private Long boardId;
+
+    @OneToMany(mappedBy = "board")
+    private List<BoardComment> boardComments;
 
     @Column(name = "title", length = 500)
     private String title;
@@ -35,11 +39,13 @@ public class Board {
     public Board(
         String title,
         String content,
-        String author
+        String author,
+        List<BoardComment> boardComments
     ) {
         this.title = title;
         this.content = content;
         this.author = author;
+        this.boardComments = boardComments;
     }
 
 }
