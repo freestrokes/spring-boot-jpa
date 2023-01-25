@@ -5,6 +5,7 @@ import com.freestrokes.dto.BoardDto;
 import com.freestrokes.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -17,6 +18,10 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
+    // TODO: @Transactional
+    // 서비스 계층에서 트랙잭션을 시작하면 repository 계층에서도 해당 트랙잭션을 전파 받아서 사용.
+    // 지연 로딩 시점까지 세션을 유지하여 LazyInitializationException 해결 가능.
+//    @Transactional(readOnly = true)
     public List<BoardDto.ResponseDto> getBoards() throws Exception {
         List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll()
             .stream()

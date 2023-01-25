@@ -16,7 +16,10 @@ public class BoardComment {
     @Column(name = "board_comment_id", unique = true, nullable = false)
     private Long boardCommentId;
 
-    // TODO: FetchType 확인 필요
+    // TODO: FetchType
+    // 즉시 로딩(EAGER)과 지연 로딩(LAZY)가 있음.
+    // @OneToMany, @ManyToMany -> 디폴트 패치 전략 LAZY
+    // @ManyToOne, @OneToOne -> 디폴트 패치 전략 EAGER
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
