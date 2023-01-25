@@ -23,6 +23,7 @@ public class Board {
     // 변환되는 엔티티의 필드가 다른 엔티티를 참조하고 또 그 엔티티의 필드가 또 다른 엔티티를 참조하는 동작이 반복
     // Infinite Recursion 발생
     // 해결하는 여러가지 방법이 있는데 간단하게 parent 엔티티에서 child @OneToMany 필드에 @JsonIgnore를 추가하여 해결 가능.
+    // @JsonIgnore는 json으로 변환되는 대상 객체에 사용해야 함. -> return 객체가 domain 인지 dto 인지 확인하고 사용.
     // 사전에 이러한 문제를 방지하고자 양방향 연관 관계를 지양하고 단방향 연관 관계를 사용.
     // 단방향 매핑만으로 테이블과 연관 관계 매핑 설정이 가능.
 
