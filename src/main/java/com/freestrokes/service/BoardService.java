@@ -18,9 +18,10 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    // TODO: @Transactional
+    // TODO: @Transactional(readOnly = true)
     // 서비스 계층에서 트랙잭션을 시작하면 repository 계층에서도 해당 트랙잭션을 전파 받아서 사용.
     // 지연 로딩 시점까지 세션을 유지하여 LazyInitializationException 해결 가능.
+    // 아래와 같이 세션 유지가 필요한 메서드에 @Transactional(readOnly = true) 붙여줌.
 //    @Transactional(readOnly = true)
     public List<BoardDto.ResponseDto> getBoards() throws Exception {
         List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll()
