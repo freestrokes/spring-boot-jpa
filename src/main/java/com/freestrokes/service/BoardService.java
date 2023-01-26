@@ -4,9 +4,12 @@ import com.freestrokes.domain.Board;
 import com.freestrokes.dto.BoardDto;
 import com.freestrokes.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -36,6 +39,48 @@ public class BoardService {
                     .build();
             })
             .collect(Collectors.toList());
+
+        // TODO: 1:N 양방향 매핑 조회 후 DTO 변환 예시
+//        // OS 목록 조회
+//        Page<BaseOs> baseOsListDB = baseOsRepository.findAll(pageable);
+//        List<BaseOsDTO.BaseOs> baseOsList = new ArrayList<>();
+//
+//        // OS 목록 DTO 변환
+//        for (BaseOs baseOs : baseOsListDB.getContent()) {
+//            List<BaseOsDTO.BaseOsVersion> baseOsVersionsDto = new ArrayList<>();
+//
+//            // Base OS 버전 DTO
+//            if (baseOs.getBaseOsVersions().size() > 0) {
+//                baseOs.getBaseOsVersions().stream().forEach(baseOsVersion -> {
+//                    baseOsVersionsDto.add(
+//                        BaseOsDTO.BaseOsVersion.builder()
+//                            .osVersionId(baseOsVersion.getOsVersionId())
+//                            .osId(baseOsVersion.getBaseOs().getOsId())
+//                            .osVersionName(baseOsVersion.getOsVersionName())
+//                            .btsCode(baseOsVersion.getBtsCode())
+//                            .billingInformation(baseOsVersion.getBillingInformation())
+//                            .btsCode(baseOsVersion.getBtsCode())
+//                            .used(baseOsVersion.getUsed())
+//                            .deleted(baseOsVersion.getDeleted())
+//                            .modifiedAt(baseOsVersion.getModifiedAt())
+//                            .build()
+//                    );
+//                });
+//            }
+//
+//            // Base OS DTO
+//            BaseOsDTO.BaseOs baseOsDto = BaseOsDTO.BaseOs.builder()
+//                .osId(baseOs.getOsId())
+//                .osName(baseOs.getOsName())
+//                .billingType(baseOs.getBillingType())
+//                .baseOsVersions(baseOsVersionsDto)
+//                .createdAt(baseOs.getCreatedAt())
+//                .build();
+//
+//            baseOsList.add(baseOsDto);
+//        }
+//
+//        return new PageImpl<>(baseOsList, pageable, baseOsListDB.getTotalElements());
 
         return boardsResponseDto;
     }
