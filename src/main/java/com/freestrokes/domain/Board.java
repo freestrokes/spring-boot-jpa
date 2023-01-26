@@ -50,7 +50,7 @@ public class Board {
     @Column(name = "author", length = 100)
     private String author;
 
-    public void update(Board board) {
+    public void updateBoard(Board board) {
         this.title = board.getTitle();
         this.content = board.getContent();
         this.author = board.getAuthor();
