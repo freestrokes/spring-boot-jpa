@@ -116,6 +116,9 @@ public class BoardService {
 
             persistBoard.get().updateBoard(board);
 
+            // TODO
+            // board builder() 생성 없이 persistBoard > updateBoard() 호출만 해준 경우
+            // 아래 save() 호출 없이 변경된 내용 저장 가능
             boardRepository.save(persistBoard.get());
         } else {
             throw new NoSuchElementException();
