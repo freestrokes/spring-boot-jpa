@@ -5,6 +5,7 @@ import com.freestrokes.dto.BoardDto;
 import com.freestrokes.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -17,6 +18,12 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
+    /**
+     * 게시글 목록 조회
+     *
+     * @return
+     * @throws Exception
+     */
     // TODO: @Transactional(readOnly = true)
     // 서비스 계층에서 트랙잭션을 시작하면 repository 계층에서도 해당 트랙잭션을 전파 받아서 사용.
     // 지연 로딩 시점까지 세션을 유지하여 LazyInitializationException 해결 가능.
@@ -81,6 +88,14 @@ public class BoardService {
         return boardsResponseDto;
     }
 
+    /**
+     * 게시글 등록
+     *
+     * @param boardRequestDto
+     * @return
+     * @throws Exception
+     */
+    @Transactional
     public BoardDto.ResponseDto postBoard(BoardDto.RequestDto boardRequestDto) throws Exception {
         Board board = boardRepository.save(boardRequestDto.toEntity());
 
@@ -104,22 +119,40 @@ public class BoardService {
         return boardResponseDto;
     }
 
-    public BoardDto.ResponseDto putBoard(Long id, BoardDto.RequestDto boardRequestDto) throws Exception {
+    /**
+     * 게시글 수정
+     *
+     * @param id
+     * @param boardRequestDto
+     * @return
+     * @throws Exception
+     */
+    @Transactional
+    public BoardDto.ResponseDto putBoard(String id, BoardDto.RequestDto boardRequestDto) throws Exception {
         Optional<Board> persistBoard = boardRepository.findById(id);
 
         if (persistBoard.isPresent()) {
-            Board board = Board.builder()
-                .title(boardRequestDto.getTitle())
-                .content(boardRequestDto.getContent())
-                .author(boardRequestDto.getAuthor())
-                .build();
-
-            persistBoard.get().updateBoard(board);
+            // TODO
+            // 아래처럼 board builder() 생성 없이 persistBoard > updateBoard() 호출만 해준 경우
+            // 아래 save() 호출 없이 변경된 내용 저장 가능
+            // 이렇게 사용하기 위해선 @Transactional 어노테이션을 명시해줘야 함.
+            persistBoard.get().updateBoard(
+                boardRequestDto.getTitle(),
+                boardRequestDto.getContent(),
+                boardRequestDto.getAuthor()
+            );
 
             // TODO
-            // board builder() 생성 없이 persistBoard > updateBoard() 호출만 해준 경우
-            // 아래 save() 호출 없이 변경된 내용 저장 가능
-            boardRepository.save(persistBoard.get());
+            // @Transactional 어노테이션이 없이 update 하려는 경우는 아래와 같이 사용.
+//            Board board = Board.builder()
+//                .title(boardRequestDto.getTitle())
+//                .content(boardRequestDto.getContent())
+//                .author(boardRequestDto.getAuthor())
+//                .build();
+//
+//            persistBoard.get().updateBoard(board);
+//
+//            boardRepository.save(persistBoard.get());
         } else {
             throw new NoSuchElementException();
         }
@@ -135,7 +168,14 @@ public class BoardService {
 
     }
 
-    public void deleteBoard(Long id) throws Exception {
+    /**
+     * 게시글 삭제
+     *
+     * @param id
+     * @throws Exception
+     */
+    @Transactional
+    public void deleteBoard(String id) throws Exception {
         boardRepository.deleteById(id);
     }
 
