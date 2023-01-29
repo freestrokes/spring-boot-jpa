@@ -43,10 +43,20 @@ public class Board {
     // TODO: 일대다 단방향 매핑의 단점
     // 다른 테이블에 있는 외래키를 관리해줘야 함.
     // 이러한 경우 연관관계 처리를 위한 update sql을 추가로 실행해야 함.
-    // 이런 문제를 해겷하기 위해 외래키가 본인 테이블에 있도록 다대일 양방향 매핑을 사용하는 것을 권장.
+    // 이런 문제를 해결하기 위해 외래키가 본인 테이블에 있도록 다대일 양방향 매핑을 사용하는 것을 권장.
     // 또한 양방향 매핑에서 @OneToMany는 연관관계의 주인이 될 수 없으므로 일대다 단방향 매핑은 권장되지 않음.
+    // 일대다 단방향 매핑보다는 다대일 양방향 매핑이 권장 됨.
+
+    // TODO: cascadeType을 이용한 영속성 전이
+    // 부모 엔티티 삭제시 연관관계가 매핑된 자식 엔티티가 고아 객체가 되지 않도록 하기 위해 사용.
+    // cascade = CascadeType.REMOVE 또는 cascade = CascadeType.ALL, orphanRemoval = true 옵션을 적용.
+    // 이와 같이 영속성 전이를 통해 생명주기를 관리할 수 있음.
     @JsonIgnore
-    @OneToMany(mappedBy = "board")
+    @OneToMany(
+        mappedBy = "board",
+        cascade = CascadeType.REMOVE
+//        cascade = CascadeType.ALL, orphanRemoval = true
+    )
     private List<BoardComment> boardComments;
 
     @Column(name = "title", length = 500)

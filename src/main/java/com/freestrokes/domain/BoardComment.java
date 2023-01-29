@@ -28,6 +28,10 @@ public class BoardComment {
     // 즉시 로딩(EAGER)과 지연 로딩(LAZY)가 있음.
     // @OneToMany, @ManyToMany -> 디폴트 패치 전략 LAZY
     // @ManyToOne, @OneToOne -> 디폴트 패치 전략 EAGER
+
+    // TODO: @JoinColumn 어노테이션
+    // 외래키 매핑을 위해서 사용.
+    // 사용하지 않으면 JPA 내부적으로 조인 테이블을 생성해서 매핑하게 됨.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
