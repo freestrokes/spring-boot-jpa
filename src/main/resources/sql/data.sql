@@ -1,7 +1,7 @@
 
 -- board
 INSERT INTO
-    testdb.board(title, content, author)
+    testdb.board(board_id, title, content, author)
 VALUES
     ('c41feac0-3da0-4a42-8271-038ead97280d', 'title1', 'content1', 'author1'),
     ('ce0eca6b-0544-45ae-a2b9-7199126c21b5', 'title2', 'content2', 'author2'),
