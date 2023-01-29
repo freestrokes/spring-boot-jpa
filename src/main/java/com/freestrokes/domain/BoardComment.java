@@ -42,9 +42,12 @@ public class BoardComment {
     @Column(name = "author", length = 100)
     private String author;
 
-    public void updateBoardComment(BoardComment boardComment) {
-        this.content = boardComment.getContent();
-        this.author = boardComment.getAuthor();
+    public void updateBoardComment(
+        String content,
+        String author
+    ) {
+        this.content = content;
+        this.author = author;
     }
 
     @Builder(toBuilder = true)
