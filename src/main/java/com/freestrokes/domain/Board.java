@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,10 +14,17 @@ import java.util.List;
 @Entity(name = "board")
 public class Board {
 
+    // TODO: id 필드에 sequence 적용하려는 경우엔 아래와 같이 사용.
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "board_id", unique = true, nullable = false)
+//    private Long boardId;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "board_id", unique = true, nullable = false)
-    private Long boardId;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "board_id", length = 100, unique = true, nullable = false)
+    private String boardId;
 
     // TODO: 양방향 연관 관계를 설정한 경우
     // 컨트롤러에서 JSON으로 값을 출력하는 경우 타입을 변환해야 하는데
@@ -50,10 +58,14 @@ public class Board {
     @Column(name = "author", length = 100)
     private String author;
 
-    public void updateBoard(Board board) {
-        this.title = board.getTitle();
-        this.content = board.getContent();
-        this.author = board.getAuthor();
+    public void updateBoard(
+        String title,
+        String content,
+        String author
+    ) {
+        this.title = title;
+        this.content = content;
+        this.author = author;
     }
 
     @Builder(toBuilder = true)

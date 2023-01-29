@@ -45,7 +45,7 @@ public class BoardDto {
 
     @Getter
     public static class ResponseDto {
-        private Long boardId;
+        private String boardId;
         private String title;
         private String content;
         private String author;
@@ -53,7 +53,7 @@ public class BoardDto {
 
         @Builder(toBuilder = true)
         public ResponseDto(
-            Long boardId,
+            String boardId,
             String title,
             String content,
             String author,
