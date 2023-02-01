@@ -29,7 +29,7 @@ public class BoardController {
     // 필드, setter를 사용한 경우엔 의존성 주입 없이 인스턴스 생성이 가능하다는 문제가 있고
     // 생성자를 사용한 경우엔 순환 참조가 발생할 수도 있음.
 
-    // 생성자를 이용한 의존성 주입 예시.
+    // TODO: 생성자를 이용한 의존성 주입(DI) 예시.
 //    public BoardController(ApplicationProperties applicationProperties, BoardService boardService) {
 //        this.applicationProperties = applicationProperties;
 //        this.boardService = boardService;
@@ -60,7 +60,9 @@ public class BoardController {
      * @throws Exception
      */
     @PostMapping(path = "/boards", produces = "application/json")
-    public ResponseEntity<BoardDto.ResponseDto> postBoard(@RequestBody BoardDto.RequestDto boardRequestDto) throws Exception {
+    public ResponseEntity<BoardDto.ResponseDto> postBoard(
+        @RequestBody BoardDto.RequestDto boardRequestDto
+    ) throws Exception {
         BoardDto.ResponseDto result = boardService.postBoard(boardRequestDto);
         return new ResponseEntity<BoardDto.ResponseDto>(result, HttpStatus.OK);
     }
@@ -74,7 +76,10 @@ public class BoardController {
      * @throws Exception
      */
     @PutMapping(path = "/boards/{id}", produces = "application/json")
-    public ResponseEntity<BoardDto.ResponseDto> putBoard(@PathVariable String id, @RequestBody BoardDto.RequestDto boardRequestDto) throws Exception {
+    public ResponseEntity<BoardDto.ResponseDto> putBoard(
+        @PathVariable String id,
+        @RequestBody BoardDto.RequestDto boardRequestDto
+    ) throws Exception {
         BoardDto.ResponseDto result = boardService.putBoard(id, boardRequestDto);
         return new ResponseEntity<BoardDto.ResponseDto>(result, HttpStatus.OK);
     }
@@ -87,7 +92,9 @@ public class BoardController {
      * @throws Exception
      */
     @DeleteMapping(path = "/boards/{id}", produces = "application/json")
-    public ResponseEntity<?> deleteBoard(@PathVariable String id) throws Exception {
+    public ResponseEntity<?> deleteBoard(
+        @PathVariable String id
+    ) throws Exception {
         boardService.deleteBoard(id);
         return new ResponseEntity<>("{}", HttpStatus.OK);
     }
