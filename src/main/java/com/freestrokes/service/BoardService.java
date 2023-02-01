@@ -32,7 +32,7 @@ public class BoardService {
     // 아래와 같이 세션 유지가 필요한 메서드에 @Transactional(readOnly = true) 붙여줌.
     @Transactional(readOnly = true)
     public List<BoardDto.ResponseDto> getBoards() throws Exception {
-        // CASE1) 1:N 양방향 매핑 조회 후 DTO 변환
+        // TODO: CASE1) 1:N 양방향 매핑 조회 후 DTO 변환
         List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll()
             .stream()
             .map(board -> {
@@ -55,7 +55,7 @@ public class BoardService {
             })
             .collect(Collectors.toList());
 
-        // CASE2) 1:N 양방향 매핑 조회 후 DTO 변환
+        //TODO: CASE2) 1:N 양방향 매핑 조회 후 DTO 변환
 //        List<Board> boardList = boardRepository.findAll();
 //        List<BoardDto.ResponseDto> boardsResponseDto = new ArrayList<>();
 //
@@ -102,7 +102,7 @@ public class BoardService {
     public BoardDto.ResponseDto postBoard(BoardDto.RequestDto boardRequestDto) throws Exception {
         Board board = boardRepository.save(boardRequestDto.toEntity());
 
-        // TODO: Optional을 이용한 중복 체크가 필요한 경우 아래와 같이 사용.
+        // TODO: Optional을 이용한 중복 체크가 필요한 경우
 //        Optional<Board> existBoard = boardRepository.findByTitle(boardRequestDto.getTitle());
 //        existBoard.ifPresent(item -> {
 //            try {
@@ -135,18 +135,16 @@ public class BoardService {
         Optional<Board> persistBoard = boardRepository.findById(id);
 
         if (persistBoard.isPresent()) {
-            // TODO
-            // 아래처럼 board builder() 생성 없이 persistBoard > updateBoard() 호출만 해준 경우
-            // 아래 save() 호출 없이 변경된 내용 저장 가능
-            // 이렇게 사용하기 위해선 @Transactional 어노테이션을 명시해줘야 함.
+            // TODO: repository save() 호출 없이 저장하려는 경우
+            // @Transactional 어노테이션을 명시해주면 가능.
+            // board builder() 생성 없이 persistBoard > updateBoard() 호출하는 것 만으로도 저장 가능
             persistBoard.get().updateBoard(
                 boardRequestDto.getTitle(),
                 boardRequestDto.getContent(),
                 boardRequestDto.getAuthor()
             );
 
-            // TODO
-            // @Transactional 어노테이션이 없이 update 하려는 경우는 아래와 같이 사용.
+            // TODO: @Transactional 어노테이션이 없이 update 하려는 경우
 //            Board board = Board.builder()
 //                .title(boardRequestDto.getTitle())
 //                .content(boardRequestDto.getContent())
