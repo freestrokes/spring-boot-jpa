@@ -52,9 +52,13 @@ public class BoardComment {
 
     @Builder(toBuilder = true)
     public BoardComment(
+        String boardCommentId,
+        Board board,
         String content,
         String author
     ) {
+        this.boardCommentId = boardCommentId;
+        this.board = board;
         this.content = content;
         this.author = author;
     }

@@ -1,5 +1,6 @@
 package com.freestrokes.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.freestrokes.domain.Board;
 import com.freestrokes.domain.BoardComment;
 import lombok.Builder;
@@ -49,6 +50,11 @@ public class BoardDto {
         private String title;
         private String content;
         private String author;
+
+        // TODO: @JsonIgnore
+        // 양방향 연관관계 매핑을 한 경우 순환 참조가 발생할 수 있음
+        // @JsonIgnore 어노테이션을 추가하여 해결.
+//        @JsonIgnore
         private List<BoardComment> boardComments;
 
         @Builder(toBuilder = true)
