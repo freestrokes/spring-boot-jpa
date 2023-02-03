@@ -20,6 +20,11 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
+    // TODO: proxy 객체
+    // 연관관계 매핑된 객체 조회시 hibernate interceptor에 의해 proxy 객체가 생성되는 경우가 있음
+    // proxy 객체의 필드 중 하나를 get 해오면 영속 상태의 객체로 매핑됨.
+    // 이 부분 찾아서 확인해보기.
+
     /**
      * 게시글 목록 조회
      *
@@ -30,6 +35,8 @@ public class BoardService {
     // 서비스 계층에서 트랙잭션을 시작하면 repository 계층에서도 해당 트랜잭션을 전파 받아서 사용.
     // 지연 로딩 시점까지 세션을 유지하여 LazyInitializationException 해결 가능.
     // 아래와 같이 세션 유지가 필요한 메서드에 @Transactional(readOnly = true) 붙여줌.
+    // but, RDB에도 연관관계가 설정되어 있지 않은 경우엔 LazyInitializationException 계속 발생할 수 있음
+    // 이러한 경우엔 @ManyToOne 설정해준 쪽에서 @EntityGraph 사용하여 해결.
     @Transactional(readOnly = true)
     public List<BoardDto.ResponseDto> getBoards() throws Exception {
         // TODO: CASE1) 1:N 양방향 매핑 조회 후 DTO 변환
