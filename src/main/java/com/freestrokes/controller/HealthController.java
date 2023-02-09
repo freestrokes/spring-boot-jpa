@@ -2,6 +2,7 @@ package com.freestrokes.controller;
 
 import com.freestrokes.aop.LogExecutionTime;
 import com.freestrokes.config.ApplicationProperties;
+import com.freestrokes.constants.Path;
 import com.freestrokes.dto.BoardDto;
 import com.freestrokes.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +12,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// TODO: @RequestMapping
+// 해당 컨트롤러 하위 전체 메서드에 공통 path 설정이 필요한 경우 class 상단에 어노테이션 사용.
+// @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1")
 public class HealthController {
 
     /**
@@ -22,7 +25,7 @@ public class HealthController {
      * @return
      * @throws Exception
      */
-    @GetMapping(path = "/health-check", produces = "application/json")
+    @GetMapping(path = Path.HEALTH_CHECK, produces = "application/json")
     @LogExecutionTime
     public ResponseEntity<?> getBoards() throws Exception {
         return new ResponseEntity<>("{}", HttpStatus.OK);
