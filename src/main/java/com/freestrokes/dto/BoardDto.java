@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class BoardDto {
 
+    // TODO: DTO 설명과 사용 목적
     // Entity는 DB 테이블과 매핑되어 있기 때문에 request, response에 대한 DTO로 사용하면 안 됨.
     // request, response에 대한 DTO는 별도로 만들어서 사용해야 함.
     // View, DB 레이어별로 계층 분리를 철저하게 해주는 것이 권장 됨.
@@ -70,15 +71,6 @@ public class BoardDto {
             this.content = content;
             this.author = author;
             this.boardComments = boardComments;
-        }
-
-        public Board toEntity() {
-            return Board.builder()
-                .title(title)
-                .content(content)
-                .author(author)
-                .boardComments(boardComments)
-                .build();
         }
     }
 

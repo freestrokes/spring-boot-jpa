@@ -49,13 +49,14 @@ public class Board {
 
     // TODO: cascadeType을 이용한 영속성 전이
     // 부모 엔티티 삭제시 연관관계가 매핑된 자식 엔티티가 고아 객체가 되지 않도록 하기 위해 사용.
-    // cascade = CascadeType.REMOVE 또는 cascade = CascadeType.ALL, orphanRemoval = true 옵션을 적용.
+    // cascade = CascadeType.REMOVE 또는 cascade = {CascadeType.ALL}, orphanRemoval = true 옵션을 적용.
     // 이와 같이 영속성 전이를 통해 생명주기를 관리할 수 있음.
     @JsonIgnore
     @OneToMany(
         mappedBy = "board",
-        cascade = CascadeType.REMOVE
-//        cascade = CascadeType.ALL, orphanRemoval = true
+        cascade = {CascadeType.ALL},
+        orphanRemoval = true
+//        cascade = CascadeType.REMOVE
     )
     private List<BoardComment> boardComments;
 
@@ -80,11 +81,13 @@ public class Board {
 
     @Builder(toBuilder = true)
     public Board(
+        String boardId,
         String title,
         String content,
         String author,
         List<BoardComment> boardComments
     ) {
+        this.boardId = boardId;
         this.title = title;
         this.content = content;
         this.author = author;

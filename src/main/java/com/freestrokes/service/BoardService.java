@@ -40,6 +40,7 @@ public class BoardService {
     @Transactional(readOnly = true)
     public List<BoardDto.ResponseDto> getBoards() throws Exception {
         // TODO: CASE1) 1:N 양방향 매핑 조회 후 DTO 변환
+        // 게시글 조회
         List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll()
             .stream()
             .map(board -> {
@@ -96,6 +97,7 @@ public class BoardService {
 //        }
 
         return boardsResponseDto;
+
     }
 
     /**
@@ -107,7 +109,6 @@ public class BoardService {
      */
     @Transactional
     public BoardDto.ResponseDto postBoard(BoardDto.RequestDto boardRequestDto) throws Exception {
-        Board board = boardRepository.save(boardRequestDto.toEntity());
 
         // TODO: Optional을 이용한 중복 체크가 필요한 경우
 //        Optional<Board> existBoard = boardRepository.findByTitle(boardRequestDto.getTitle());
@@ -119,14 +120,23 @@ public class BoardService {
 //            }
 //        });
 
-        BoardDto.ResponseDto boardResponseDto = BoardDto.ResponseDto.builder()
+        // 게시글 생성
+        Board board = Board.builder()
+            .title(boardRequestDto.getTitle())
+            .content(boardRequestDto.getContent())
+            .author(boardRequestDto.getAuthor())
+            .build();
+
+        // 게시글 저장
+        boardRepository.save(board);
+
+        return BoardDto.ResponseDto.builder()
             .boardId(board.getBoardId())
             .title(board.getTitle())
             .content(board.getContent())
             .author(board.getAuthor())
             .build();
 
-        return boardResponseDto;
     }
 
     /**
@@ -139,52 +149,49 @@ public class BoardService {
      */
     @Transactional
     public BoardDto.ResponseDto putBoard(String id, BoardDto.RequestDto boardRequestDto) throws Exception {
-        Optional<Board> persistBoard = boardRepository.findById(id);
 
-        if (persistBoard.isPresent()) {
-            // TODO: repository save() 호출 없이 저장하려는 경우
-            // @Transactional 어노테이션을 명시해주면 가능.
-            // board builder() 생성 없이 persistBoard > updateBoard() 호출하는 것 만으로도 저장 가능
-            persistBoard.get().updateBoard(
-                boardRequestDto.getTitle(),
-                boardRequestDto.getContent(),
-                boardRequestDto.getAuthor()
-            );
+        // 게시글 조회
+        Board findBoard = boardRepository.findById(id).orElseThrow(NoSuchElementException::new);
 
-            // TODO: @Transactional 어노테이션이 없이 update 하려는 경우
-//            Board board = Board.builder()
-//                .title(boardRequestDto.getTitle())
-//                .content(boardRequestDto.getContent())
-//                .author(boardRequestDto.getAuthor())
-//                .build();
+        // TODO: repository save() 호출 없이 저장하려는 경우
+        // @Transactional 어노테이션을 명시해주면 가능.
+        // board builder() 생성 없이 findBoard > updateBoard() 호출하는 것 만으로도 저장 가능
+        findBoard.updateBoard(
+            boardRequestDto.getTitle(),
+            boardRequestDto.getContent(),
+            boardRequestDto.getAuthor()
+        );
+
+        // TODO: @Transactional 어노테이션이 없이 update 하려는 경우
+//        Board board = Board.builder()
+//            .title(boardRequestDto.getTitle())
+//            .content(boardRequestDto.getContent())
+//            .author(boardRequestDto.getAuthor())
+//            .build();
 //
-//            persistBoard.get().updateBoard(board);
+//        findBoard.updateBoard(board);
 //
-//            boardRepository.save(persistBoard.get());
-        } else {
-            throw new NoSuchElementException();
-        }
+//        boardRepository.save(findBoard);
 
-        BoardDto.ResponseDto boardResponseDto = BoardDto.ResponseDto.builder()
-            .boardId(persistBoard.get().getBoardId())
-            .title(persistBoard.get().getTitle())
-            .content(persistBoard.get().getContent())
-            .author(persistBoard.get().getAuthor())
+        return BoardDto.ResponseDto.builder()
+            .boardId(findBoard.getBoardId())
+            .title(findBoard.getTitle())
+            .content(findBoard.getContent())
+            .author(findBoard.getAuthor())
             .build();
-
-        return boardResponseDto;
 
     }
 
     /**
      * 게시글 삭제
      *
-     * @param id
+     * @param boardId
      * @throws Exception
      */
     @Transactional
-    public void deleteBoard(String id) throws Exception {
-        boardRepository.deleteById(id);
+    public void deleteBoard(String boardId) throws Exception {
+        // 게시글 삭제
+        boardRepository.deleteById(boardId);
     }
 
 }
