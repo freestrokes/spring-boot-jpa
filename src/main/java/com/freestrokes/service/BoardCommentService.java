@@ -9,9 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -72,9 +70,21 @@ public class BoardCommentService {
             boardCommentRequestDto.getAuthor()
         );
 
+        // TODO: could not initialize proxy - no session
+        // 연관관계의 FetchType LAZY로 설정된 객체는 조회시 바로 초기화되지 않고 proxy 객체로 처리 됨.
+        // 이 상태에서 proxy 객체를 타입 캐스팅하려는 경우 could not initialize proxy - no session 에러가 발생하게 됨.
+        // FetchType EAGER로 설정하면 해결되지만 N+1 문제가 발생할 수 있기 때문에 권장되지 않음.
+        // 따라서 아래와 같이 proxy 객체의 값을 꺼내와서 DTO에 담아 반환하는 방법이 권장 됨.
         return BoardCommentDto.ResponseDto.builder()
             .boardCommentId(findBoardComment.getBoardCommentId())
-            .board(findBoardComment.getBoard())
+            .board(
+                Board.builder()
+                    .boardId(findBoardComment.getBoard().getBoardId())
+                    .title(findBoardComment.getBoard().getTitle())
+                    .content(findBoardComment.getBoard().getContent())
+                    .author(findBoardComment.getBoard().getAuthor())
+                    .build()
+            )
             .content(findBoardComment.getContent())
             .author(findBoardComment.getAuthor())
             .build();
