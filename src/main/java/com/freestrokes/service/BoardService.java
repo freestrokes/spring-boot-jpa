@@ -25,18 +25,19 @@ public class BoardService {
     // proxy 객체의 필드 중 하나를 get 해오면 영속 상태의 객체로 매핑됨.
     // 이 부분 찾아서 확인해보기.
 
-    /**
-     * 게시글 목록 조회
-     *
-     * @return
-     * @throws Exception
-     */
     // TODO: @Transactional(readOnly = true)
     // 서비스 계층에서 트랙잭션을 시작하면 repository 계층에서도 해당 트랜잭션을 전파 받아서 사용.
     // 지연 로딩 시점까지 세션을 유지하여 LazyInitializationException 해결 가능.
     // 아래와 같이 세션 유지가 필요한 메서드에 @Transactional(readOnly = true) 붙여줌.
     // but, RDB에도 연관관계가 설정되어 있지 않은 경우엔 LazyInitializationException 계속 발생할 수 있음
     // 이러한 경우엔 @ManyToOne 설정해준 쪽에서 @EntityGraph 사용하여 해결.
+
+    /**
+     * 게시글 목록 조회
+     *
+     * @return
+     * @throws Exception
+     */
     @Transactional(readOnly = true)
     public List<BoardDto.ResponseDto> getBoards() throws Exception {
         // TODO: CASE1) 1:N 양방향 매핑 조회 후 DTO 변환
@@ -153,8 +154,8 @@ public class BoardService {
         // 게시글 조회
         Board findBoard = boardRepository.findById(id).orElseThrow(NoSuchElementException::new);
 
-        // TODO: repository save() 호출 없이 저장하려는 경우
-        // @Transactional 어노테이션을 명시해주면 가능.
+        // TODO: @Transactional 어노테이션 사용하여 update 하려는 경우
+        // @Transactional 어노테이션을 명시하여 repository save() 호출 없이 저장 가능.
         // board builder() 생성 없이 findBoard > updateBoard() 호출하는 것 만으로도 저장 가능
         findBoard.updateBoard(
             boardRequestDto.getTitle(),
