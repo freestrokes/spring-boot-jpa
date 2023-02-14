@@ -1,7 +1,7 @@
 package com.freestrokes.controller;
 
 import com.freestrokes.aop.LogExecutionTime;
-import com.freestrokes.constant.Path;
+import com.freestrokes.constants.PathConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class HealthController {
      * @return
      * @throws Exception
      */
-    @GetMapping(path = Path.HEALTH_CHECK, produces = "application/json")
+    @GetMapping(path = PathConstants.HEALTH_CHECK, produces = "application/json")
     @LogExecutionTime
     public ResponseEntity<?> getBoards() throws Exception {
         return new ResponseEntity<>("{}", HttpStatus.OK);
