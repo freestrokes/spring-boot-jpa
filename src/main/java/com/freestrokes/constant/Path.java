@@ -1,4 +1,4 @@
-package com.freestrokes.constants;
+package com.freestrokes.constant;
 
 public class Path {
 

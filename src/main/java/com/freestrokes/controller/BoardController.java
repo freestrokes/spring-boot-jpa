@@ -2,7 +2,7 @@ package com.freestrokes.controller;
 
 import com.freestrokes.aop.LogExecutionTime;
 import com.freestrokes.config.ApplicationProperties;
-import com.freestrokes.constants.Path;
+import com.freestrokes.constant.Path;
 import com.freestrokes.dto.BoardDto;
 import com.freestrokes.service.BoardService;
 import lombok.RequiredArgsConstructor;

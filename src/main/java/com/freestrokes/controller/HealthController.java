@@ -1,16 +1,11 @@
 package com.freestrokes.controller;
 
 import com.freestrokes.aop.LogExecutionTime;
-import com.freestrokes.config.ApplicationProperties;
-import com.freestrokes.constants.Path;
-import com.freestrokes.dto.BoardDto;
-import com.freestrokes.service.BoardService;
+import com.freestrokes.constant.Path;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 // TODO: @RequestMapping
 // 해당 컨트롤러 하위 전체 메서드에 공통 path 설정이 필요한 경우 class 상단에 어노테이션 사용.

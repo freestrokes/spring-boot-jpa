@@ -1,6 +1,6 @@
 package com.freestrokes.controller;
 
-import com.freestrokes.constants.Path;
+import com.freestrokes.constant.Path;
 import com.freestrokes.dto.BoardCommentDto;
 import com.freestrokes.service.BoardCommentService;
 import lombok.RequiredArgsConstructor;
