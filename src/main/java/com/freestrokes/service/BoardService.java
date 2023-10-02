@@ -40,8 +40,23 @@ public class BoardService {
      */
     @Transactional(readOnly = true)
     public List<BoardDto.ResponseDto> getBoards() throws Exception {
+        // TODO: LazyInitializationException 발생하는 예시
+        // @Transactional(readOnly = true) 주석 처리
+//        List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll()
+//            .stream()
+//            .map(board -> {
+//                return BoardDto.ResponseDto.builder()
+//                    .boardId(board.getBoardId())
+//                    .title(board.getTitle())
+//                    .content(board.getContent())
+//                    .author(board.getAuthor())
+//                    .boardComments(board.getBoardComments())
+//                    .build();
+//            })
+//            .collect(Collectors.toList());
+
         // TODO: CASE1) 1:N 양방향 매핑 조회 후 DTO 변환
-        // 게시글 조회
+//         게시글 조회
         List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll()
             .stream()
             .map(board -> {
@@ -64,7 +79,7 @@ public class BoardService {
             })
             .collect(Collectors.toList());
 
-        //TODO: CASE2) 1:N 양방향 매핑 조회 후 DTO 변환
+        // TODO: CASE2) 1:N 양방향 매핑 조회 후 DTO 변환
 //        List<Board> boardList = boardRepository.findAll();
 //        List<BoardDto.ResponseDto> boardsResponseDto = new ArrayList<>();
 //
