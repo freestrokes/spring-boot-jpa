@@ -41,7 +41,7 @@ public class BoardService {
     @Transactional(readOnly = true)
     public List<BoardDto.ResponseDto> getBoards() throws Exception {
         // TODO: LazyInitializationException 발생하는 예시
-        // @Transactional(readOnly = true) 주석 처리
+        // @Transactional(readOnly = true) 주석 처리해줄 것.
 //        List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll()
 //            .stream()
 //            .map(board -> {
@@ -55,8 +55,8 @@ public class BoardService {
 //            })
 //            .collect(Collectors.toList());
 
+        // 게시글 조회
         // TODO: CASE1) 1:N 양방향 매핑 조회 후 DTO 변환
-//         게시글 조회
         List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll()
             .stream()
             .map(board -> {
@@ -172,6 +172,12 @@ public class BoardService {
         // TODO: @Transactional 어노테이션 사용하여 update 하려는 경우
         // @Transactional 어노테이션을 명시하여 repository save() 호출 없이 저장 가능.
         // board builder() 생성 없이 findBoard > updateBoard() 호출하는 것 만으로도 저장 가능
+
+        // Dirty Checking이 동작하기 때문에 save() 메서드를 호출하지 않아도 됨.
+        // Dirty Checking은 상태 변경 검사를 의미.
+        // JPA는 트랜잭션 종료 시점에 상태가 변경된 모든 엔티티들을 자동으로 데이터베이스에 반영해줌.
+        // JPA 영속성 콘텍스트에 생성된 엔티티를 조회하면 해당 엔티티의 스냅샷을 만들어놓음.
+        // 트랜잭션 종료 시점에 스냅샷과 비교하여 변경된 부분이 있다면 update를 해서 데이터베이스에 반영해줌.
         findBoard.updateBoard(
             boardRequestDto.getTitle(),
             boardRequestDto.getContent(),
