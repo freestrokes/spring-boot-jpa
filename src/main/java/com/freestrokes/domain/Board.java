@@ -1,6 +1,7 @@
 package com.freestrokes.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,10 +30,16 @@ public class Board {
     // TODO: 양방향 연관관계에서 발생하는 Infinite Recursion
     // 컨트롤러에서 JSON으로 값을 출력하는 경우 타입을 변환해야 하는데
     // 변환되는 엔티티의 필드가 다른 엔티티를 참조하고 또 그 엔티티의 필드가 또 다른 엔티티를 참조하는 동작이 반복하여 Infinite Recursion 발생
+
+    // @JsonIgnore 사용하기
     // 해결하는 여러가지 방법이 있는데 간단하게 상위(parent) 엔티티에서 하위(child) @OneToMany 필드에 @JsonIgnore를 추가하여 해결 가능.
     // @JsonIgnore는 json으로 변환되는 대상 객체에 사용해야 함. -> return 객체가 domain 인지 dto 인지 확인하고 사용.
     // 사전에 이러한 문제를 방지하고자 양방향 연관 관계를 지양하고 단방향 연관 관계를 사용.
     // 단방향 매핑만으로 테이블과 연관 관계 매핑 설정이 가능.
+
+    // @JsonManagedReference, @JsonBackReference 사용하기
+    // 필드에 대해 직렬화/비직렬화 여부를 설정해주는 것.
+    // @OneToMany 필드에 JsonManagedReference, @ManyToOne 필드에 JsonBackReference 설정.
 
     // TODO: 연관관계의 주인
     // 1:N 관계에서 외래키는 항상 N 쪽에 있음.
@@ -63,6 +70,7 @@ public class Board {
     // 부모 엔티티 삭제시 연관관계가 매핑된 자식 엔티티가 고아 객체가 되지 않도록 하기 위해 사용.
     // cascade = CascadeType.REMOVE 또는 cascade = {CascadeType.ALL}, orphanRemoval = true 옵션을 적용.
     // 이와 같이 영속성 전이를 통해 생명주기를 관리할 수 있음.
+//    @JsonManagedReference
     @JsonIgnore
     @OneToMany(
         mappedBy = "board",
