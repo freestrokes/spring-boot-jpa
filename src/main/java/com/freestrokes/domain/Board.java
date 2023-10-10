@@ -66,6 +66,10 @@ public class Board {
     // 공식적으로 일대다(1:N) 양방향 매핑은 없음. 굳이 사용한다면 아래와 같은 형태로 사용.
     // ex) @JoinColumn(name = "team_id", insertable = false, updatable = false)
 
+    // TODO: N+1 문제
+    // FetchType.EAGER, FetchType.LAZY 즉시로딩과 지연로딩 모두 N+1 문제가 발생할 수 있음.
+    // fetch join, 하이버네이트 @BatchSize, FetchModel.SUBSELECT 등으로 해결 가능.
+
     // TODO: cascadeType을 이용한 영속성 전이
     // 부모 엔티티 삭제시 연관관계가 매핑된 자식 엔티티가 고아 객체가 되지 않도록 하기 위해 사용.
     // cascade = CascadeType.REMOVE 또는 cascade = {CascadeType.ALL}, orphanRemoval = true 옵션을 적용.
