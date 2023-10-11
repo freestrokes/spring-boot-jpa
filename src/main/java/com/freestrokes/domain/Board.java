@@ -67,6 +67,9 @@ public class Board {
     // ex) @JoinColumn(name = "team_id", insertable = false, updatable = false)
 
     // TODO: N+1 문제
+    // 연관관계가 설정된 엔티티를 조회했을 때 한 번에 조회하지 않고
+    // 조회된 데이터의 개수(N) 만큼 연관관계의 엔티티에 대해 조회 쿼리가 추가로 발생하는 문제.
+    // 이러한 현상은 많은 양의 쿼리가 발생했을 때 성능 저하의 원인이 됨.
     // FetchType.EAGER, FetchType.LAZY 즉시로딩과 지연로딩 모두 N+1 문제가 발생할 수 있음.
     // fetch join, 하이버네이트 @BatchSize, FetchModel.SUBSELECT 등으로 해결 가능.
 
