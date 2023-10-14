@@ -73,6 +73,12 @@ public class Board {
     // FetchType.EAGER, FetchType.LAZY 즉시로딩과 지연로딩 모두 N+1 문제가 발생할 수 있음.
     // fetch join, 하이버네이트 @BatchSize, FetchModel.SUBSELECT 등으로 해결 가능.
 
+    // N+1 문제 확인을 위한 설정
+    // 하위 엔티티 필드의 연관관계에 @ManyToOne(fetch = FetchType.EAGER) 설정
+    // spring.jpa.properties.hibernate.default_batch_fetch_size 주석 처리
+    // spring.jpa.properties.hibernate.format_sql: false 설정
+    // spring.jpa.properties.hibernate.use_sql_comments: false 설정
+
     // TODO: cascadeType을 이용한 영속성 전이
     // 부모 엔티티 삭제시 연관관계가 매핑된 자식 엔티티가 고아 객체가 되지 않도록 하기 위해 사용.
     // cascade = CascadeType.REMOVE 또는 cascade = {CascadeType.ALL}, orphanRemoval = true 옵션을 적용.
@@ -83,6 +89,7 @@ public class Board {
         mappedBy = "board",
         cascade = {CascadeType.ALL},
         orphanRemoval = true
+//        fetch = FetchType.EAGER
 //        cascade = CascadeType.REMOVE
     )
     private List<BoardComment> boardComments;

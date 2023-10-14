@@ -12,16 +12,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 public class BoardServiceTests {
 
-	private final BoardRepository boardRepository;
-
-	@Before
-	public void setup() {
-	}
-
-	@After
-	public void cleanAll() {
-		boardRepository.deleteAll();
-	}
+//	private final BoardRepository boardRepository;
+//
+//	@Before
+//	public void setup() {
+//	}
+//
+//	@After
+//	public void cleanAll() {
+//		boardRepository.deleteAll();
+//	}
 
 	@Test
 	public void contextLoads() {

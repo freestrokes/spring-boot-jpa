@@ -34,6 +34,7 @@ public class BoardComment {
     // 외래키 매핑을 위해서 사용.
     // 사용하지 않으면 JPA 내부적으로 조인 테이블을 생성해서 매핑하게 됨.
 //    @JsonBackReference
+//    @ManyToOne
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
