@@ -74,7 +74,12 @@ public class Board {
     // fetch join, 하이버네이트 @BatchSize, FetchModel.SUBSELECT 등으로 해결 가능.
 
     // N+1 문제 확인을 위한 설정
-    // 하위 엔티티 필드의 연관관계에 @ManyToOne(fetch = FetchType.EAGER) 설정
+    // 즉시 로딩의 경우
+    // 상위 엔티티에서 연관관계가 설정된 필드에 @OneToMany(fetch = FetchType.EAGER) 설정
+    // 하위 엔티티에서 연관관계가 설정된 필드에 @ManyToOne 설정
+    // 지연 로딩의 경우
+    // 상위 엔티티에서 연관관계가 설정된 필드에 @OneToMany 설정
+    // 하위 엔티티에서 연관관계가 설정된 필드에 @ManyToOne(fetch = FetchType.LAZY) 설정
     // spring.jpa.properties.hibernate.default_batch_fetch_size 주석 처리
     // spring.jpa.properties.hibernate.format_sql: false 설정
     // spring.jpa.properties.hibernate.use_sql_comments: false 설정
