@@ -1,10 +1,10 @@
 version: "3.9"
 
 services:
-  mysql_local:
+  mysql_local_spring_boot_jpa:
     image: mysql:5.7.43
     platform: linux/amd64
-    container_name: mysql_local
+    container_name: mysql_local_spring_boot_jpa
     environment:
       - LANG=C.UTF-8
       - MYSQL_DATABASE=testdb
