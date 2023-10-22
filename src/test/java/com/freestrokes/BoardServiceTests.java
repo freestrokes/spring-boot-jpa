@@ -11,8 +11,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
+@ActiveProfiles("local")
 @RequiredArgsConstructor
 @RunWith(SpringRunner.class)
 @SpringBootTest()
@@ -53,12 +57,13 @@ public class BoardServiceTests {
 
 	@After
 	public void cleanAll() {
-//		boardCommentRepository.deleteAll();
+		boardCommentRepository.deleteAll();
 //		boardRepository.deleteAll();
 	}
 
 	@Test
 	public void contextLoads() {
+		List<Board> boards = boardRepository.findAll();
 		//given
 //		List<String> subjectNames = academyService.findAllSubjectNames();
 		//then
