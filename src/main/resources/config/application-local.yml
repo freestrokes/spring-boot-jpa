@@ -47,16 +47,19 @@ spring:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
   datasource:
-    url: jdbc:mysql://localhost:3306/testdb?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
-    username: root
-    password: 1234
-  #    type: com.zaxxer.hikari.HikariDataSource
-  #    hikari:
-  #      poolName: Hikari
-  #      auto-commit: false
-  #      data-source-properties:
-  #        cachePrepStmts: true
-  #        prepStmtCacheSize: 250
-  #        prepStmtCacheSqlLimit: 2048
-  #        useServerPrepStmts: true
-  #    initialization-mode: always
+    url: jdbc:mysql://localhost:3307/testdb?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
+    username: tester
+    password: tester
+#    url: jdbc:mysql://localhost:3306/testdb?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
+#    username: root
+#    password: 1234
+#      type: com.zaxxer.hikari.HikariDataSource
+#      hikari:
+#        poolName: Hikari
+#        auto-commit: false
+#        data-source-properties:
+#          cachePrepStmts: true
+#          prepStmtCacheSize: 250
+#          prepStmtCacheSqlLimit: 2048
+#          useServerPrepStmts: true
+#      initialization-mode: always
