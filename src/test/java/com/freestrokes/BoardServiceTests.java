@@ -16,6 +16,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
+//import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 @ActiveProfiles("local")
 @RequiredArgsConstructor
 @RunWith(SpringRunner.class)
@@ -50,24 +54,18 @@ public class BoardServiceTests {
 
 			boardCommentRepository.save(boardComment);
 		}
-
-//		entityManager.flush();
-//		entityManager.clear();
 	}
 
 	@After
 	public void cleanAll() {
 		boardCommentRepository.deleteAll();
-//		boardRepository.deleteAll();
+		boardRepository.deleteAll();
 	}
 
 	@Test
 	public void contextLoads() {
-		List<Board> boards = boardRepository.findAll();
-		//given
-//		List<String> subjectNames = academyService.findAllSubjectNames();
-		//then
-//		assertThat(subjectNames.size(), is(10));
+		List<BoardComment> boardComments = boardCommentRepository.findAll();
+		assertThat(boardComments.size(), is(10));
 	}
 
 }
