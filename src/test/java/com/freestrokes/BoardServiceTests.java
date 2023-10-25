@@ -52,6 +52,7 @@ public class BoardServiceTests {
 				.author("board comment test " + i)
 				.build();
 
+			// 게시글 댓글 저장
 			boardCommentRepository.save(boardComment);
 		}
 	}
