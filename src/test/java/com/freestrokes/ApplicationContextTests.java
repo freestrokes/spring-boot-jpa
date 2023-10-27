@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 //import static org.hamcrest.MatcherAssert.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ActiveProfiles("local")
+@ActiveProfiles("dev")
 @RunWith(SpringRunner.class)
 @SpringBootTest()
 public class ApplicationContextTests {
