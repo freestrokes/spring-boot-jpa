@@ -1,26 +1,16 @@
 # ============================================================
-# Spring Boot configuration for the "local" profile.
+# Spring Boot configuration for the "dev" profile.
 #
 # This configuration overrides the application.yml file.
 # ============================================================
 
-application:
-  endpoint: https://freestrokes.tistory.com/
-  user:
-    name: freestrokes
-    age: 30
-    gender: male
-  property:
-    test:
-      list: a,b,c
-
 server:
-  port: 8081
+  port: 8082
 
 logging:
   level:
-#    root: DEBUG
-#    tech.jhipster: ERROR
+    #    root: DEBUG
+    #    tech.jhipster: ERROR
     org.hibernate: INFO
 #    org.springframework.boot: ERROR
 #    com.kakaoi.mpc: DEBUG
@@ -30,7 +20,7 @@ logging:
 spring:
   config:
     activate:
-      on-profile: local
+      on-profile: dev
   jpa:
     open-in-view: false
     database: mysql
@@ -50,16 +40,13 @@ spring:
     url: jdbc:mysql://localhost:3307/testdb?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
     username: tester
     password: tester
-#    url: jdbc:mysql://localhost:3306/testdb?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
-#    username: root
-#    password: 1234
-#      type: com.zaxxer.hikari.HikariDataSource
-#      hikari:
-#        poolName: Hikari
-#        auto-commit: false
-#        data-source-properties:
-#          cachePrepStmts: true
-#          prepStmtCacheSize: 250
-#          prepStmtCacheSqlLimit: 2048
-#          useServerPrepStmts: true
-#      initialization-mode: always
+  #    type: com.zaxxer.hikari.HikariDataSource
+  #    hikari:
+  #      poolName: Hikari
+  #      auto-commit: false
+  #      data-source-properties:
+  #        cachePrepStmts: true
+  #        prepStmtCacheSize: 250
+  #        prepStmtCacheSqlLimit: 2048
+  #        useServerPrepStmts: true
+  #    initialization-mode: always
