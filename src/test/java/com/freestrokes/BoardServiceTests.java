@@ -4,6 +4,8 @@ import com.freestrokes.domain.Board;
 import com.freestrokes.domain.BoardComment;
 import com.freestrokes.repository.BoardCommentRepository;
 import com.freestrokes.repository.BoardRepository;
+import com.freestrokes.service.BoardCommentMockService;
+import com.freestrokes.service.BoardMockService;
 import lombok.RequiredArgsConstructor;
 import org.junit.After;
 import org.junit.Before;
@@ -31,6 +33,12 @@ public class BoardServiceTests {
 
 	@Autowired
 	private BoardCommentRepository boardCommentRepository;
+
+	@Autowired
+	private BoardMockService boardMockService;
+
+	@Autowired
+	private BoardCommentMockService boardCommentMockService;
 
 	@Before
 	public void setup() {
