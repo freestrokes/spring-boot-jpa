@@ -6,14 +6,16 @@ import com.freestrokes.dto.BoardCommentDto;
 import com.freestrokes.repository.BoardCommentRepository;
 import com.freestrokes.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 
-@RequiredArgsConstructor
+@Profile("!dev")
 @Service
-public class BoardCommentService {
+@RequiredArgsConstructor
+public class BoardCommentService implements BoardCommentRequestService {
 
     private final BoardRepository boardRepository;
     private final BoardCommentRepository boardCommentRepository;
@@ -26,7 +28,7 @@ public class BoardCommentService {
      * @throws Exception
      */
     @Transactional
-    public BoardCommentDto.ResponseDto postBoardComment(BoardCommentDto.RequestDto boardCommentRequestDto) throws Exception {
+    public BoardCommentDto.ResponseDto postBoardComment(BoardCommentDto.RequestDto boardCommentRequestDto) {
 
         // 게시글 조회
         Board findBoard = boardRepository.findById(boardCommentRequestDto.getBoardId()).orElseThrow(NoSuchElementException::new);
@@ -59,7 +61,7 @@ public class BoardCommentService {
      * @throws Exception
      */
     @Transactional
-    public BoardCommentDto.ResponseDto putBoardComment(String boardCommentId, BoardCommentDto.RequestDto boardCommentRequestDto) throws Exception {
+    public BoardCommentDto.ResponseDto putBoardComment(String boardCommentId, BoardCommentDto.RequestDto boardCommentRequestDto) {
 
         // 게시글 댓글 조회
         BoardComment findBoardComment = boardCommentRepository.findById(boardCommentId).orElseThrow(NoSuchElementException::new);
@@ -106,7 +108,7 @@ public class BoardCommentService {
      * @throws Exception
      */
     @Transactional
-    public void deleteBoardComment(String boardCommentId) throws Exception {
+    public void deleteBoardComment(String boardCommentId) {
         // 게시글 댓글 삭제
         boardCommentRepository.deleteById(boardCommentId);
     }

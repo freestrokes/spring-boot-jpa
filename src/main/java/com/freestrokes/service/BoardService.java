@@ -5,18 +5,23 @@ import com.freestrokes.domain.BoardComment;
 import com.freestrokes.dto.BoardDto;
 import com.freestrokes.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Optional;
 
-@RequiredArgsConstructor
 @Service
-public class BoardService {
+@Profile("!dev")
+@RequiredArgsConstructor
+public class BoardService implements BoardRequestService {
 
     private final BoardRepository boardRepository;
 
@@ -33,13 +38,16 @@ public class BoardService {
     // 이러한 경우엔 @ManyToOne 설정해준 쪽에서 @EntityGraph 사용하여 해결.
 
     /**
-     * 게시글 목록 조회
-     *
-     * @return
-     * @throws Exception
+     * 게시글 목록을 조회
+     * @param pageable 페이징 정보
+     * @return 게시글 목록
      */
     @Transactional(readOnly = true)
-    public List<BoardDto.ResponseDto> getBoards() throws Exception {
+    public Page<BoardDto.ResponseDto> getBoards(Pageable pageable) {
+
+        Page<Board> findBoards = boardRepository.findAll(pageable);
+//        List<BoardDto.ResponseDto> boardsResponseDto = new ArrayList<>();
+
         // TODO: LazyInitializationException 발생하는 예시
         // @Transactional(readOnly = true) 주석 처리해줄 것.
 //        List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll()
@@ -112,19 +120,17 @@ public class BoardService {
 //            );
 //        }
 
-        return boardsResponseDto;
+        return new PageImpl<>(boardsResponseDto, pageable, findBoards.getTotalElements());
 
     }
 
     /**
      * 게시글 등록
-     *
-     * @param boardRequestDto
-     * @return
-     * @throws Exception
+     * @param boardRequestDto 게시글 정보
+     * @return 등록한 게시글 정보
      */
     @Transactional
-    public BoardDto.ResponseDto postBoard(BoardDto.RequestDto boardRequestDto) throws Exception {
+    public BoardDto.ResponseDto postBoard(BoardDto.RequestDto boardRequestDto) {
 
         // TODO: Optional을 이용한 중복 체크가 필요한 경우
 //        Optional<Board> existBoard = boardRepository.findByTitle(boardRequestDto.getTitle());
@@ -156,18 +162,16 @@ public class BoardService {
     }
 
     /**
-     * 게시글 수정
-     *
-     * @param id
-     * @param boardRequestDto
-     * @return
-     * @throws Exception
+     * 게시글 ID를 이용하여 게시글을 수정.
+     * @param boardId 게시글 ID
+     * @param boardRequestDto 게시글 정보
+     * @return 수정한 게시글 정보
      */
     @Transactional
-    public BoardDto.ResponseDto putBoard(String id, BoardDto.RequestDto boardRequestDto) throws Exception {
+    public BoardDto.ResponseDto putBoard(String boardId, BoardDto.RequestDto boardRequestDto) {
 
         // 게시글 조회
-        Board findBoard = boardRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        Board findBoard = boardRepository.findById(boardId).orElseThrow(NoSuchElementException::new);
 
         // TODO: @Transactional 어노테이션 사용하여 update 하려는 경우
         // @Transactional 어노테이션을 명시하여 repository save() 호출 없이 저장 가능.
@@ -205,13 +209,11 @@ public class BoardService {
     }
 
     /**
-     * 게시글 삭제
-     *
-     * @param boardId
-     * @throws Exception
+     * 게시글 ID를 이용하여 게시글을 삭제.
+     * @param boardId 게시글 ID
      */
     @Transactional
-    public void deleteBoard(String boardId) throws Exception {
+    public void deleteBoard(String boardId) {
         // 게시글 삭제
         boardRepository.deleteById(boardId);
     }
