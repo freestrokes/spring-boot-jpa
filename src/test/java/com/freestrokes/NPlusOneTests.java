@@ -2,7 +2,6 @@ package com.freestrokes;
 
 import com.freestrokes.domain.Board;
 import com.freestrokes.domain.BoardComment;
-import com.freestrokes.dto.BoardDto;
 import com.freestrokes.repository.BoardCommentRepository;
 import com.freestrokes.repository.BoardRepository;
 import com.freestrokes.service.BoardCommentMockService;
@@ -18,7 +17,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 //import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,7 +26,7 @@ import static org.hamcrest.Matchers.is;
 @RequiredArgsConstructor
 @RunWith(SpringRunner.class)
 @SpringBootTest()
-public class BoardServiceTests {
+public class NPlusOneTests {
 
 	@Autowired
 	private BoardRepository boardRepository;
