@@ -5,6 +5,7 @@ import com.freestrokes.config.ApplicationProperties;
 import com.freestrokes.constants.PathConstants;
 import com.freestrokes.dto.BoardDto;
 import com.freestrokes.service.BoardService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
@@ -16,8 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequiredArgsConstructor
+@Tag(name = "Board")
 @RestController
+@RequiredArgsConstructor
 public class BoardController {
 
     // TODO: ApplicationProperties 테스트를 위해 추가

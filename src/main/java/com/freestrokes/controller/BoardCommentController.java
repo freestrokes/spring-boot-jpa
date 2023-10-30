@@ -3,13 +3,15 @@ package com.freestrokes.controller;
 import com.freestrokes.constants.PathConstants;
 import com.freestrokes.dto.BoardCommentDto;
 import com.freestrokes.service.BoardCommentService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequiredArgsConstructor
+@Tag(name = "BoardComment")
 @RestController
+@RequiredArgsConstructor
 public class BoardCommentController {
 
     private final BoardCommentService boardCommentService;
