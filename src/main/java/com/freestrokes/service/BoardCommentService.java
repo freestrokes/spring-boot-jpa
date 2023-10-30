@@ -6,13 +6,11 @@ import com.freestrokes.dto.BoardCommentDto;
 import com.freestrokes.repository.BoardCommentRepository;
 import com.freestrokes.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 
-@Profile("!dev")
 @Service
 @RequiredArgsConstructor
 public class BoardCommentService implements BoardCommentRequestService {
