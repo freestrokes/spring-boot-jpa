@@ -2,6 +2,7 @@ package com.freestrokes;
 
 import com.freestrokes.domain.Board;
 import com.freestrokes.domain.BoardComment;
+import com.freestrokes.dto.BoardDto;
 import com.freestrokes.repository.BoardCommentRepository;
 import com.freestrokes.repository.BoardRepository;
 import com.freestrokes.service.BoardCommentMockService;
@@ -17,6 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 //import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -42,17 +44,18 @@ public class BoardServiceTests {
 
 	@Before
 	public void setup() {
-		// 게시글 생성
-		Board board = Board.builder()
-			.title("board title test")
-			.content("board content test")
-			.author("board author test")
-			.build();
-
-		// 게시글 저장
-		boardRepository.save(board);
 
 		for (int i = 0; i < 10; i++) {
+			// 게시글 생성
+			Board board = Board.builder()
+				.title("board title test")
+				.content("board content test")
+				.author("board author test")
+				.build();
+
+			// 게시글 저장
+			boardRepository.save(board);
+
 			// 게시글 댓글 생성
 			BoardComment boardComment = BoardComment.builder()
 				.board(board)
@@ -73,8 +76,8 @@ public class BoardServiceTests {
 
 	@Test
 	public void contextLoads() {
-		List<BoardComment> boardComments = boardCommentRepository.findAll();
-		assertThat(boardComments.size(), is(10));
+		List<Board> boards = boardRepository.findAll();
+		assertThat(boards.size(), is(10));
 	}
 
 }
