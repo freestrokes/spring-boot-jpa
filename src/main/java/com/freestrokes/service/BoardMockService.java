@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -34,6 +35,21 @@ public class BoardMockService implements BoardRequestService {
     // 아래와 같이 세션 유지가 필요한 메서드에 @Transactional(readOnly = true) 붙여줌.
     // but, RDB에도 연관관계가 설정되어 있지 않은 경우엔 LazyInitializationException 계속 발생할 수 있음
     // 이러한 경우엔 @ManyToOne 설정해준 쪽에서 @EntityGraph 사용하여 해결.
+
+    /**
+     * 게시글 목록을 조회 (Mock)
+     * @return 게시글 목록
+     */
+    @Transactional(readOnly = true)
+    public void getMockBoards() {
+
+        boardRepository.findAll().forEach(board -> {
+            board.getBoardComments().forEach(boardComment ->
+                System.out.println(boardComment.getContent())
+            );
+        });
+
+    }
 
     /**
      * 게시글 목록을 조회
