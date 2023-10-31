@@ -2,6 +2,7 @@ package com.freestrokes;
 
 import com.freestrokes.domain.Board;
 import com.freestrokes.domain.BoardComment;
+import com.freestrokes.dto.BoardDto;
 import com.freestrokes.repository.BoardCommentRepository;
 import com.freestrokes.repository.BoardRepository;
 import com.freestrokes.service.BoardCommentMockService;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -74,8 +76,12 @@ public class NPlusOneTests {
 
 	@Test
 	public void contextLoads() {
-		List<Board> boards = boardRepository.findAll();
-		assertThat(boards.size(), is(10));
+		// 즉시 로딩 N+1 확인
+//		List<Board> boards = boardRepository.findAll();
+//		assertThat(boards.size(), is(10));
+
+		// 지연 로딩 N+1 확인
+		boardMockService.getMockBoards();
 	}
 
 }
