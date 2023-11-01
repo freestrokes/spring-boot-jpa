@@ -1,12 +1,9 @@
 package com.freestrokes.dto;
 
-import com.freestrokes.domain.Board;
-import com.freestrokes.domain.BoardComment;
+import com.freestrokes.domain.BoardEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -33,14 +30,14 @@ public class BoardCommentDto {
     @Getter
     public static class ResponseDto {
         private String boardCommentId;
-        private Board board;
+        private BoardEntity board;
         private String content;
         private String author;
 
         @Builder(toBuilder = true)
         public ResponseDto(
             String boardCommentId,
-            Board board,
+            BoardEntity board,
             String content,
             String author
         ) {

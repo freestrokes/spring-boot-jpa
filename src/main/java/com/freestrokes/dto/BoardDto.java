@@ -1,8 +1,7 @@
 package com.freestrokes.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.freestrokes.domain.Board;
-import com.freestrokes.domain.BoardComment;
+import com.freestrokes.domain.BoardEntity;
+import com.freestrokes.domain.BoardCommentEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,8 +35,8 @@ public class BoardDto {
             this.author = author;
         }
 
-        public Board toEntity() {
-            return Board.builder()
+        public BoardEntity toEntity() {
+            return BoardEntity.builder()
                 .title(title)
                 .content(content)
                 .author(author)
@@ -56,7 +55,7 @@ public class BoardDto {
         // 양방향 연관관계 매핑을 한 경우 순환 참조가 발생할 수 있음
         // @JsonIgnore 어노테이션을 추가하여 해결.
 //        @JsonIgnore
-        private List<BoardComment> boardComments;
+        private List<BoardCommentEntity> boardComments;
 
         @Builder(toBuilder = true)
         public ResponseDto(
@@ -64,7 +63,7 @@ public class BoardDto {
             String title,
             String content,
             String author,
-            List<BoardComment> boardComments
+            List<BoardCommentEntity> boardComments
         ) {
             this.boardId = boardId;
             this.title = title;
