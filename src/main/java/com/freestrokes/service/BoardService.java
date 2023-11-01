@@ -1,7 +1,7 @@
 package com.freestrokes.service;
 
-import com.freestrokes.domain.Board;
-import com.freestrokes.domain.BoardComment;
+import com.freestrokes.domain.BoardEntity;
+import com.freestrokes.domain.BoardCommentEntity;
 import com.freestrokes.dto.BoardDto;
 import com.freestrokes.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
-import java.util.ArrayList;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +41,7 @@ public class BoardService implements BoardRequestService {
     @Transactional(readOnly = true)
     public Page<BoardDto.ResponseDto> getBoards(Pageable pageable) {
 
-        Page<Board> findBoards = boardRepository.findAll(pageable);
+        Page<BoardEntity> findBoards = boardRepository.findAll(pageable);
 //        List<BoardDto.ResponseDto> boardsResponseDto = new ArrayList<>();
 
         // TODO: LazyInitializationException 발생하는 예시
@@ -73,7 +71,7 @@ public class BoardService implements BoardRequestService {
                     .author(board.getAuthor())
                     .boardComments(
                         board.getBoardComments().stream().map(boardComment -> {
-                            return BoardComment.builder()
+                            return BoardCommentEntity.builder()
                                 .boardCommentId(boardComment.getBoardCommentId())
                                 .board(board)
                                 .content(boardComment.getContent())
@@ -141,20 +139,20 @@ public class BoardService implements BoardRequestService {
 //        });
 
         // 게시글 생성
-        Board board = Board.builder()
+        BoardEntity boardEntity = BoardEntity.builder()
             .title(boardRequestDto.getTitle())
             .content(boardRequestDto.getContent())
             .author(boardRequestDto.getAuthor())
             .build();
 
         // 게시글 저장
-        boardRepository.save(board);
+        boardRepository.save(boardEntity);
 
         return BoardDto.ResponseDto.builder()
-            .boardId(board.getBoardId())
-            .title(board.getTitle())
-            .content(board.getContent())
-            .author(board.getAuthor())
+            .boardId(boardEntity.getBoardId())
+            .title(boardEntity.getTitle())
+            .content(boardEntity.getContent())
+            .author(boardEntity.getAuthor())
             .build();
 
     }
@@ -169,7 +167,7 @@ public class BoardService implements BoardRequestService {
     public BoardDto.ResponseDto putBoard(String boardId, BoardDto.RequestDto boardRequestDto) {
 
         // 게시글 조회
-        Board findBoard = boardRepository.findById(boardId).orElseThrow(NoSuchElementException::new);
+        BoardEntity findBoardEntity = boardRepository.findById(boardId).orElseThrow(NoSuchElementException::new);
 
         // TODO: @Transactional 어노테이션 사용하여 update 하려는 경우
         // @Transactional 어노테이션을 명시하여 repository save() 호출 없이 저장 가능.
@@ -180,7 +178,7 @@ public class BoardService implements BoardRequestService {
         // JPA는 트랜잭션 종료 시점에 상태가 변경된 모든 엔티티들을 자동으로 데이터베이스에 반영해줌.
         // JPA 영속성 콘텍스트에 생성된 엔티티를 조회하면 해당 엔티티의 스냅샷을 만들어놓음.
         // 트랜잭션 종료 시점에 스냅샷과 비교하여 변경된 부분이 있다면 update를 해서 데이터베이스에 반영해줌.
-        findBoard.updateBoard(
+        findBoardEntity.updateBoard(
             boardRequestDto.getTitle(),
             boardRequestDto.getContent(),
             boardRequestDto.getAuthor()
@@ -198,10 +196,10 @@ public class BoardService implements BoardRequestService {
 //        boardRepository.save(findBoard);
 
         return BoardDto.ResponseDto.builder()
-            .boardId(findBoard.getBoardId())
-            .title(findBoard.getTitle())
-            .content(findBoard.getContent())
-            .author(findBoard.getAuthor())
+            .boardId(findBoardEntity.getBoardId())
+            .title(findBoardEntity.getTitle())
+            .content(findBoardEntity.getContent())
+            .author(findBoardEntity.getAuthor())
             .build();
 
     }

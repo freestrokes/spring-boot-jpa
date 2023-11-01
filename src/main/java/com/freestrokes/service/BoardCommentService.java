@@ -1,7 +1,7 @@
 package com.freestrokes.service;
 
-import com.freestrokes.domain.Board;
-import com.freestrokes.domain.BoardComment;
+import com.freestrokes.domain.BoardEntity;
+import com.freestrokes.domain.BoardCommentEntity;
 import com.freestrokes.dto.BoardCommentDto;
 import com.freestrokes.repository.BoardCommentRepository;
 import com.freestrokes.repository.BoardRepository;
@@ -29,23 +29,23 @@ public class BoardCommentService implements BoardCommentRequestService {
     public BoardCommentDto.ResponseDto postBoardComment(BoardCommentDto.RequestDto boardCommentRequestDto) {
 
         // 게시글 조회
-        Board findBoard = boardRepository.findById(boardCommentRequestDto.getBoardId()).orElseThrow(NoSuchElementException::new);
+        BoardEntity findBoardEntity = boardRepository.findById(boardCommentRequestDto.getBoardId()).orElseThrow(NoSuchElementException::new);
 
         // 게시글 댓글 생성
-        BoardComment boardComment = BoardComment.builder()
-            .board(findBoard)
+        BoardCommentEntity boardCommentEntity = BoardCommentEntity.builder()
+            .board(findBoardEntity)
             .content(boardCommentRequestDto.getContent())
             .author(boardCommentRequestDto.getAuthor())
             .build();
 
         // 게시글 댓글 등록
-        boardCommentRepository.save(boardComment);
+        boardCommentRepository.save(boardCommentEntity);
 
         return BoardCommentDto.ResponseDto.builder()
-            .boardCommentId(boardComment.getBoardCommentId())
-            .board(boardComment.getBoard())
-            .content(boardComment.getContent())
-            .author(boardComment.getAuthor())
+            .boardCommentId(boardCommentEntity.getBoardCommentId())
+            .board(boardCommentEntity.getBoard())
+            .content(boardCommentEntity.getContent())
+            .author(boardCommentEntity.getAuthor())
             .build();
 
     }
@@ -62,13 +62,13 @@ public class BoardCommentService implements BoardCommentRequestService {
     public BoardCommentDto.ResponseDto putBoardComment(String boardCommentId, BoardCommentDto.RequestDto boardCommentRequestDto) {
 
         // 게시글 댓글 조회
-        BoardComment findBoardComment = boardCommentRepository.findById(boardCommentId).orElseThrow(NoSuchElementException::new);
+        BoardCommentEntity findBoardCommentEntity = boardCommentRepository.findById(boardCommentId).orElseThrow(NoSuchElementException::new);
 
         // TODO: CASE2) repository 메서드에 @EntityGraph 사용하여 연관 객체 조회
 //        BoardComment findBoardComment = boardCommentRepository.findByBoardCommentId(boardCommentId).orElseThrow(NoSuchElementException::new);
 
         // 게시글 댓글 저장
-        findBoardComment.updateBoardComment(
+        findBoardCommentEntity.updateBoardComment(
             boardCommentRequestDto.getContent(),
             boardCommentRequestDto.getAuthor()
         );
@@ -81,20 +81,20 @@ public class BoardCommentService implements BoardCommentRequestService {
         // CASE2) proxy 객체의 값을 꺼내와서 DTO에 담아 반환
 
         return BoardCommentDto.ResponseDto.builder()
-            .boardCommentId(findBoardComment.getBoardCommentId())
+            .boardCommentId(findBoardCommentEntity.getBoardCommentId())
             // TODO: CASE1) proxy 객체의 값을 꺼내서 DTO에 담아 반환
             .board(
-                Board.builder()
-                    .boardId(findBoardComment.getBoard().getBoardId())
-                    .title(findBoardComment.getBoard().getTitle())
-                    .content(findBoardComment.getBoard().getContent())
-                    .author(findBoardComment.getBoard().getAuthor())
+                BoardEntity.builder()
+                    .boardId(findBoardCommentEntity.getBoard().getBoardId())
+                    .title(findBoardCommentEntity.getBoard().getTitle())
+                    .content(findBoardCommentEntity.getBoard().getContent())
+                    .author(findBoardCommentEntity.getBoard().getAuthor())
                     .build()
             )
             // TODO: CASE2) repository 메서드에 @EntityGraph 사용하여 연관 객체 조회
 //            .board(findBoardComment.getBoard())
-            .content(findBoardComment.getContent())
-            .author(findBoardComment.getAuthor())
+            .content(findBoardCommentEntity.getContent())
+            .author(findBoardCommentEntity.getAuthor())
             .build();
 
     }
