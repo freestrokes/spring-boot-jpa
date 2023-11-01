@@ -1,6 +1,5 @@
 package com.freestrokes.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +9,9 @@ import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
-@Entity(name = "board_comment")
-public class BoardComment {
+@Table(name = "board_comment")
+@Entity
+public class BoardCommentEntity {
 
     // TODO: id 필드에 sequence 적용하려는 경우엔 아래와 같이 사용.
 //    @Id
@@ -37,7 +37,7 @@ public class BoardComment {
 //    @ManyToOne
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
-    private Board board;
+    private BoardEntity board;
 
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;
@@ -54,9 +54,9 @@ public class BoardComment {
     }
 
     @Builder(toBuilder = true)
-    public BoardComment(
+    public BoardCommentEntity(
         String boardCommentId,
-        Board board,
+        BoardEntity board,
         String content,
         String author
     ) {

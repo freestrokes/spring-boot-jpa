@@ -1,7 +1,6 @@
 package com.freestrokes.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,8 +11,9 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-@Entity(name = "board")
-public class Board {
+@Table(name = "board")
+@Entity
+public class BoardEntity {
 
     // TODO: id 필드에 sequence 적용하려는 경우엔 아래와 같이 사용.
 //    @Id
@@ -82,8 +82,8 @@ public class Board {
     // 상위 엔티티에서 연관관계가 설정된 필드에 @OneToMany 설정
     // 하위 엔티티에서 연관관계가 설정된 필드에 @ManyToOne(fetch = FetchType.LAZY) 설정
     // spring.jpa.properties.hibernate.default_batch_fetch_size 주석 처리
-    // spring.jpa.properties.hibernate.format_sql: false 설정
-    // spring.jpa.properties.hibernate.use_sql_comments: false 설정
+    // spring.jpa.properties.hibernate.format_sql 주석 처리
+    // spring.jpa.properties.hibernate.use_sql_comments 주석 처리
 
     // TODO: cascadeType을 이용한 영속성 전이
     // 부모 엔티티 삭제시 연관관계가 매핑된 자식 엔티티가 고아 객체가 되지 않도록 하기 위해 사용.
@@ -92,13 +92,13 @@ public class Board {
 //    @JsonManagedReference
     @JsonIgnore
     @OneToMany(
-        mappedBy = "board",
-        cascade = {CascadeType.ALL},
-        orphanRemoval = true
+        mappedBy = "board"
+//        cascade = {CascadeType.ALL},
+//        orphanRemoval = true,
 //        fetch = FetchType.EAGER
 //        cascade = CascadeType.REMOVE
     )
-    private List<BoardComment> boardComments;
+    private List<BoardCommentEntity> boardComments;
 
     @Column(name = "title", length = 500)
     private String title;
@@ -120,12 +120,12 @@ public class Board {
     }
 
     @Builder(toBuilder = true)
-    public Board(
+    public BoardEntity(
         String boardId,
         String title,
         String content,
         String author,
-        List<BoardComment> boardComments
+        List<BoardCommentEntity> boardComments
     ) {
         this.boardId = boardId;
         this.title = title;
