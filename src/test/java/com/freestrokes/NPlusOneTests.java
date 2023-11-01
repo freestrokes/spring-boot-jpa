@@ -1,8 +1,7 @@
 package com.freestrokes;
 
-import com.freestrokes.domain.Board;
-import com.freestrokes.domain.BoardComment;
-import com.freestrokes.dto.BoardDto;
+import com.freestrokes.domain.BoardEntity;
+import com.freestrokes.domain.BoardCommentEntity;
 import com.freestrokes.repository.BoardCommentRepository;
 import com.freestrokes.repository.BoardRepository;
 import com.freestrokes.service.BoardCommentMockService;
@@ -16,11 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 //import static org.assertj.core.api.Assertions.assertThat;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -47,24 +45,24 @@ public class NPlusOneTests {
 
 		for (int i = 0; i < 10; i++) {
 			// 게시글 생성
-			Board board = Board.builder()
+			BoardEntity boardEntity = BoardEntity.builder()
 				.title("board title test")
 				.content("board content test")
 				.author("board author test")
 				.build();
 
 			// 게시글 저장
-			boardRepository.save(board);
+			boardRepository.save(boardEntity);
 
 			// 게시글 댓글 생성
-			BoardComment boardComment = BoardComment.builder()
-				.board(board)
+			BoardCommentEntity boardCommentEntity = BoardCommentEntity.builder()
+				.board(boardEntity)
 				.content("board comment test " + i)
 				.author("board comment test " + i)
 				.build();
 
 			// 게시글 댓글 저장
-			boardCommentRepository.save(boardComment);
+			boardCommentRepository.save(boardCommentEntity);
 		}
 	}
 
@@ -77,11 +75,14 @@ public class NPlusOneTests {
 	@Test
 	public void contextLoads() {
 		// 즉시 로딩 N+1 확인
-//		List<Board> boards = boardRepository.findAll();
+//		List<BoardEntity> boards = boardRepository.findAll();
 //		assertThat(boards.size(), is(10));
 
 		// 지연 로딩 N+1 확인
-		boardMockService.getMockBoards();
+//		boardMockService.getMockBoards();
+
+		// 지연 로딩 N+1 Fetch Join 확인
+		List<BoardEntity> boards = boardRepository.findAllFetchJoin();
 	}
 
 }
