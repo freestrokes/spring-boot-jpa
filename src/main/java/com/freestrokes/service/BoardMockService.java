@@ -54,7 +54,7 @@ public class BoardMockService implements BoardRequestService {
      */
     @Transactional(readOnly = true)
     public void getMockBoardsWithFetchJoin() {
-        boardRepository.findAllFetchJoin().forEach(board -> {
+        boardRepository.findAllByFetchJoin().forEach(board -> {
             board.getBoardComments().forEach(boardComment ->
                 System.out.println(boardComment.getContent())
             );
