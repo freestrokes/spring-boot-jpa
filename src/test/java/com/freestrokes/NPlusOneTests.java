@@ -82,7 +82,11 @@ public class NPlusOneTests {
 //		boardMockService.getMockBoards();
 
 		// 지연 로딩 N+1 Fetch Join 확인
-		List<BoardEntity> boards = boardRepository.findAllFetchJoin();
+//		List<BoardEntity> boards = boardRepository.findAllByFetchJoin();
+
+		// EntityGraph 확인
+		List<BoardEntity> boards = boardRepository.findAllByEntityGraph();
+
 	}
 
 }
