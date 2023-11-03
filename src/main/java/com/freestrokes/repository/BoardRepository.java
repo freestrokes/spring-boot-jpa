@@ -15,8 +15,8 @@ public interface BoardRepository extends JpaRepository<BoardEntity, String> {
 
     Page<BoardEntity> findAll(Pageable pageable);
 
-    // TODO: JPQL left join fetch 사용하는 경우
-    // 아래와 같이 추가 컬렉션을 재귀적으로 가져오는 경우.
+    // TODO: JPQL left join fetch
+    // 아래와 같이 추가 컬렉션을 재귀적으로 가져오는 경우에 사용.
 //    @Query(
 //        "SELECT provisioning " +
 //            "FROM ProvisioningEntity provisioning " +
@@ -31,6 +31,13 @@ public interface BoardRepository extends JpaRepository<BoardEntity, String> {
     @Query("SELECT DISTINCT board FROM BoardEntity board JOIN FETCH board.boardComments")
     List<BoardEntity> findAllByFetchJoin();
 
+    // TODO: EntityGraph 사용 예시
+    // attributePaths에는 필드명을 작성해줘야 함 (엔티티명 아님)
+    // EntityGraphType.LOAD
+    // EntityGraph에 명시한 attribute는 EAGER로 패치, 나머지 attribute는 명시한 FetchType 또는 디폴트 FetchType으로 패치
+    // @OneToMany는 LAZY, @ManyToOne은 EAGER 디폴트
+    // EntityGraphType.FETCH
+    // EntityGraph에 명시한 attribute는 EAGER로 패치, 나머지 attribute는 LAZY로 패치
     @EntityGraph(
         attributePaths = {"boardComments"},
         type = EntityGraph.EntityGraphType.LOAD
