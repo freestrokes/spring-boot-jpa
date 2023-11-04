@@ -15,6 +15,10 @@ public interface BoardRepository extends JpaRepository<BoardEntity, String> {
 
     Page<BoardEntity> findAll(Pageable pageable);
 
+    // TODO: 카테시안 곱
+    // join fetch와 entityGraph 사용시 카테시안 곱이 발생 함
+    // 이를 해결하기 위해 Set 도는 쿼리에 distinct 사용
+
     // TODO: JPQL left join fetch
     // 아래와 같이 추가 컬렉션을 재귀적으로 가져오는 경우에 사용.
 //    @Query(
