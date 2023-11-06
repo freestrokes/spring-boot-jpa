@@ -17,11 +17,11 @@ public interface BoardRepository extends JpaRepository<BoardEntity, String> {
 
     // TODO: 카테시안 곱 (Cartesian Product)
     // join fetch와 entityGraph 사용시 카테시안 곱이 발생 함
-    // 이를 해결하기 위해 Set 도는 쿼리에 distinct 사용 (순서 보장이 필요한 경우엔 LinkedHashSet 사용)
-    // 카테시안 곱은 연관관계의 엔티티 사이에 유효한 join 조건을 사용하지 않았을 때
-    // 해당 테이블에 대한 모든 데이터를 전부 결합하여 엔티티에 존재하는 행 갯수를 곱한 만큼의 결과 값이 반환되는 것.
+    // 카테시안 곱은 연관관계의 엔티티 사이에 유효한 join 조건을 사용하지 않았을 때,
+    // 해당 엔티티의 모든 데이터 행 개수를 곱한 결과가 반환되는 것.
     // 카테시안 곱은 명확한 Join 규칙이 주어지지 않았을 때 발생.
-    // join 이후 on 절이 없을 때, db는 두 테이블의 결합한 결과는 내보내야겠고, 조건이 없으니 M * N으로 모든 경우의 수를 출력하는 것.
+    // join 이후 on 절이 주어지지 않으면 db는 두 엔티티의 결합 조건이 없기 때문에 M * N으로 모든 경우의 수를 조회하여 반환.
+    // Set 또는 쿼리에 distinct 사용하여 해결. (순서 보장이 필요한 경우엔 LinkedHashSet 사용)
 
     // TODO: JPQL left join fetch
     // 아래와 같이 추가 컬렉션을 재귀적으로 가져오는 경우에 사용.
