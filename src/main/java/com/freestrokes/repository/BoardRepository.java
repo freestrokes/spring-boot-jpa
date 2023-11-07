@@ -20,11 +20,11 @@ public interface BoardRepository extends JpaRepository<BoardEntity, String> {
     // 카테시안 곱은 연관관계의 엔티티 사이에 유효한 join 조건을 사용하지 않았을 때,
     // 해당 엔티티의 모든 데이터 행 개수를 곱한 결과가 반환되는 것.
     // 카테시안 곱은 명확한 Join 규칙이 주어지지 않았을 때 발생.
-    // join 이후 on 절이 주어지지 않으면 db는 두 엔티티의 결합 조건이 없기 때문에 M * N으로 모든 경우의 수를 조회하여 반환.
+    // db는 두 엔티티의 결합 조건이 없기 때문에 M * N으로 모든 경우의 수를 조회하여 반환.
     // Set 또는 쿼리에 distinct 사용하여 해결. (순서 보장이 필요한 경우엔 LinkedHashSet 사용)
 
     // TODO: JPQL left join fetch
-    // 아래와 같이 추가 컬렉션을 재귀적으로 가져오는 경우에 사용.
+    // left join fetch는 아래와 같이 추가적인 컬렉션을 재귀적으로 가져오는 경우에 사용.
 //    @Query(
 //        "SELECT provisioning " +
 //            "FROM ProvisioningEntity provisioning " +
