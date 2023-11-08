@@ -35,7 +35,7 @@ public interface BoardRepository extends JpaRepository<BoardEntity, String> {
 
     // TODO: JPQL 사용시 cannot resolve symbol 에러가 발생하는 경우
     // 도메인 클래스에서 @Entity(name = "board_comment") 이와 같이 사용하며 안 됨.
-    // @Entity만 작성해서 사용하고 실제 테이블명은 @Table(name = "board_comment") 이와 같이 사용해야 함.
+    // @Entity 어노테이션을 속성없이 작성해서 사용하고 실제 테이블명은 @Table(name = "board_comment") 이와 같이 사용해야 함.
     @Query("SELECT DISTINCT board FROM BoardEntity board JOIN FETCH board.boardComments")
     List<BoardEntity> findAllByFetchJoin();
 
