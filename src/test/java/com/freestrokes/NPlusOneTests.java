@@ -43,7 +43,7 @@ public class NPlusOneTests {
 	@Before
 	public void setup() {
 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 5; i++) {
 			// 게시글 생성
 			BoardEntity boardEntity = BoardEntity.builder()
 				.title("board title test")
@@ -76,7 +76,7 @@ public class NPlusOneTests {
 	public void contextLoads() {
 		// 즉시 로딩 N+1 확인
 //		List<BoardEntity> boards = boardRepository.findAll();
-//		assertThat(boards.size(), is(10));
+//		assertThat(boards.size(), is(5));
 
 		// 지연 로딩 N+1 확인
 //		boardMockService.getMockBoards();
