@@ -15,13 +15,14 @@ public interface BoardRepository extends JpaRepository<BoardEntity, String> {
 
     Page<BoardEntity> findAll(Pageable pageable);
 
-    // TODO: 카테시안 곱 (Cartesian Product)
-    // join fetch와 entityGraph 사용시 카테시안 곱이 발생 함
+    // TODO: Fetch Join 및 EntityGraph 사용 시 발생하는 카테시안 곱 (Cartesian Product)
+    // Fetch Join 및 EntityGraph 사용시 카테시안 곱이 발생 함
     // 카테시안 곱은 연관관계의 엔티티 사이에 유효한 join 조건을 사용하지 않았을 때,
     // 해당 엔티티의 모든 데이터 행 개수를 곱한 결과가 반환되는 것.
     // 카테시안 곱은 명확한 Join 규칙이 주어지지 않았을 때 발생.
     // db는 두 엔티티의 결합 조건이 없기 때문에 M * N으로 모든 경우의 수를 조회하여 반환.
     // Set 또는 쿼리에 distinct 사용하여 해결. (순서 보장이 필요한 경우엔 LinkedHashSet 사용)
+    // Fetch Join은 Inner Join을 사용하고 EntityGraph는 OuterJoin을 사용하는 차이가 있음.
 
     // TODO: JPQL left join fetch
     // left join fetch는 아래와 같이 추가적인 컬렉션을 재귀적으로 가져오는 경우에 사용.
@@ -41,10 +42,11 @@ public interface BoardRepository extends JpaRepository<BoardEntity, String> {
 
     // TODO: EntityGraph 사용 예시
     // attributePaths에는 필드명을 작성해줘야 함 (엔티티명 아님)
-    // EntityGraphType.LOAD
+    // EntityGraph는 Outer Join을 사용.
+    // 1. EntityGraphType.LOAD
     // EntityGraph에 명시한 attribute는 EAGER로 패치, 나머지 attribute는 명시한 FetchType 또는 디폴트 FetchType으로 패치
     // @OneToMany는 LAZY, @ManyToOne은 EAGER 디폴트
-    // EntityGraphType.FETCH
+    // 2. EntityGraphType.FETCH
     // EntityGraph에 명시한 attribute는 EAGER로 패치, 나머지 attribute는 LAZY로 패치
     @EntityGraph(
         attributePaths = {"boardComments"},
