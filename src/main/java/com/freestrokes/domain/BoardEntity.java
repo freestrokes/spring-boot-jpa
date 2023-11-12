@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -98,7 +100,8 @@ public class BoardEntity {
 //        fetch = FetchType.EAGER
 //        cascade = CascadeType.REMOVE
     )
-    private List<BoardCommentEntity> boardComments;
+//    private List<BoardCommentEntity> boardComments;
+    private Set<BoardCommentEntity> boardComments = new LinkedHashSet<>();
 
     @Column(name = "title", length = 500)
     private String title;
@@ -125,7 +128,8 @@ public class BoardEntity {
         String title,
         String content,
         String author,
-        List<BoardCommentEntity> boardComments
+        Set<BoardCommentEntity> boardComments
+//        List<BoardCommentEntity> boardComments
     ) {
         this.boardId = boardId;
         this.title = title;
