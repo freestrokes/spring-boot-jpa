@@ -52,7 +52,7 @@ public interface BoardRepository extends JpaRepository<BoardEntity, String> {
         attributePaths = {"boardComments"},
         type = EntityGraph.EntityGraphType.LOAD
     )
-    @Query("SELECT board FROM BoardEntity board")
+    @Query("SELECT DISTINCT board FROM BoardEntity board")
     List<BoardEntity> findAllByEntityGraph();
 
 }
