@@ -13,8 +13,6 @@ import java.util.List;
 @Repository
 public interface BoardRepository extends JpaRepository<BoardEntity, String> {
 
-    Page<BoardEntity> findAll(Pageable pageable);
-
     // TODO: Fetch Join 및 EntityGraph 사용 시 발생하는 카테시안 곱 (Cartesian Product)
     // Fetch Join 및 EntityGraph 사용시 카테시안 곱이 발생 함
     // 카테시안 곱은 연관관계의 엔티티 사이에 유효한 join 조건을 사용하지 않았을 때, 해당 엔티티의 모든 데이터 행 개수를 곱한 결과가 반환되는 것.
@@ -54,5 +52,24 @@ public interface BoardRepository extends JpaRepository<BoardEntity, String> {
     )
     @Query("SELECT DISTINCT board FROM BoardEntity board")
     List<BoardEntity> findAllByEntityGraph();
+
+    // TODO: Pageable 이용한 기본적인 Pagination
+    Page<BoardEntity> findAll(Pageable pageable);
+
+    // TODO: Fetch Join 이용한 Pagination
+    // 정상 동작하는 방법 찾아보기. inner join 동작해서 안 됨.
+//    @Query(
+//        value = "SELECT DISTINCT board FROM BoardEntity board JOIN FETCH board.boardComments",
+//        countQuery = "SELECT COUNT(board) FROM BoardEntity board"
+//    )
+//    Page<BoardEntity> findAllByFetchJoinWithPaging(Pageable pageable);
+
+    // TODO: EntityGraph 이용한 Pagination
+    @EntityGraph(
+        attributePaths = {"boardComments"},
+        type = EntityGraph.EntityGraphType.LOAD
+    )
+    @Query("SELECT DISTINCT board FROM BoardEntity board")
+    Page<BoardEntity> findAllByEntityGraphWithPaging(Pageable pageable);
 
 }
