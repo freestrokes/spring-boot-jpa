@@ -94,14 +94,14 @@ public class BoardEntity {
 //    @JsonManagedReference
     @JsonIgnore
     @OneToMany(
-        mappedBy = "board"
-//        cascade = {CascadeType.ALL},
-//        orphanRemoval = true,
+        mappedBy = "board",
+        cascade = {CascadeType.ALL},
+        orphanRemoval = true
 //        fetch = FetchType.EAGER
 //        cascade = CascadeType.REMOVE
     )
-//    private List<BoardCommentEntity> boardComments;
-    private Set<BoardCommentEntity> boardComments = new LinkedHashSet<>();
+    private List<BoardCommentEntity> boardComments;
+//    private Set<BoardCommentEntity> boardComments = new LinkedHashSet<>();
 
     @Column(name = "title", length = 500)
     private String title;
@@ -128,8 +128,8 @@ public class BoardEntity {
         String title,
         String content,
         String author,
-        Set<BoardCommentEntity> boardComments
-//        List<BoardCommentEntity> boardComments
+//        Set<BoardCommentEntity> boardComments
+        List<BoardCommentEntity> boardComments
     ) {
         this.boardId = boardId;
         this.title = title;
