@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -41,11 +42,53 @@ public class BoardService implements BoardRequestService {
     @Transactional(readOnly = true)
     public Page<BoardDto.ResponseDto> getBoards(Pageable pageable) {
 
-        Page<BoardEntity> findBoards = boardRepository.findAll(pageable);
-//        List<BoardDto.ResponseDto> boardsResponseDto = new ArrayList<>();
+        // TODO: Pageable 이용한 기본적인 Pagination
+//        Page<BoardEntity> findBoards = boardRepository.findAll(pageable);
+
+        // TODO: EntityGraph 이용한 Pagination
+        Page<BoardEntity> findBoards = boardRepository.findAllByEntityGraphWithPaging(pageable);
+
+        List<BoardDto.ResponseDto> boardsResponseDto = new ArrayList<>();
+
+        // 조회한 게시글 목록에 대한 DTO 변환 (Pageable)
+        findBoards.getContent().forEach(boardEntity -> {
+            boardsResponseDto.add(
+                BoardDto.ResponseDto.builder()
+                    .boardId(boardEntity.getBoardId())
+                    .title(boardEntity.getTitle())
+                    .content(boardEntity.getContent())
+                    .author(boardEntity.getAuthor())
+                    .boardComments(
+                        boardEntity.getBoardComments().stream().map(boardComment -> {
+                            return BoardCommentEntity.builder()
+                                .boardCommentId(boardComment.getBoardCommentId())
+                                .board(boardEntity)
+                                .content(boardComment.getContent())
+                                .author(boardComment.getAuthor())
+                                .build();
+                        }).collect(Collectors.toList())
+                    )
+                    .build()
+            );
+        });
 
         // TODO: LazyInitializationException 발생하는 예시
         // @Transactional(readOnly = true) 주석 처리해줄 것.
+//        List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll()
+//            .stream()
+//            .map(boardEntity -> {
+//                return BoardDto.ResponseDto.builder()
+//                    .boardId(boardEntity.getBoardId())
+//                    .title(boardEntity.getTitle())
+//                    .content(boardEntity.getContent())
+//                    .author(boardEntity.getAuthor())
+//                    .boardComments(boardEntity.getBoardComments())
+//                    .build();
+//            })
+//            .collect(Collectors.toList());
+
+        // 게시글 조회
+        // TODO: CASE1) 1:N 양방향 매핑 조회 후 DTO 변환
 //        List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll()
 //            .stream()
 //            .map(board -> {
@@ -54,34 +97,19 @@ public class BoardService implements BoardRequestService {
 //                    .title(board.getTitle())
 //                    .content(board.getContent())
 //                    .author(board.getAuthor())
-//                    .boardComments(board.getBoardComments())
+//                    .boardComments(
+//                        board.getBoardComments().stream().map(boardComment -> {
+//                            return BoardCommentEntity.builder()
+//                                .boardCommentId(boardComment.getBoardCommentId())
+//                                .board(board)
+//                                .content(boardComment.getContent())
+//                                .author(boardComment.getAuthor())
+//                                .build();
+//                        }).collect(Collectors.toList())
+//                    )
 //                    .build();
 //            })
 //            .collect(Collectors.toList());
-
-        // 게시글 조회
-        // TODO: CASE1) 1:N 양방향 매핑 조회 후 DTO 변환
-        List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll()
-            .stream()
-            .map(board -> {
-                return BoardDto.ResponseDto.builder()
-                    .boardId(board.getBoardId())
-                    .title(board.getTitle())
-                    .content(board.getContent())
-                    .author(board.getAuthor())
-                    .boardComments(
-                        board.getBoardComments().stream().map(boardComment -> {
-                            return BoardCommentEntity.builder()
-                                .boardCommentId(boardComment.getBoardCommentId())
-                                .board(board)
-                                .content(boardComment.getContent())
-                                .author(boardComment.getAuthor())
-                                .build();
-                        }).collect(Collectors.toList())
-                    )
-                    .build();
-            })
-            .collect(Collectors.toList());
 
         // TODO: CASE2) 1:N 양방향 매핑 조회 후 DTO 변환
 //        List<Board> boardList = boardRepository.findAll();
