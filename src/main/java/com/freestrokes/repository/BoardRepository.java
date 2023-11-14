@@ -58,8 +58,12 @@ public interface BoardRepository extends JpaRepository<BoardEntity, String> {
 
     // TODO: 일대다(1:N) 연관관계에서 Fetch Join을 이용한 Pagination
     // 일대다(1:N) 연관관계에 대해 Fetch Join을 이용하여 페이징을 하면 데이터 정합성에 문제가 발생할 수 있음.
+    // 일대다(1:N) 연관관계의 테이블을 조인하면 데이터의 개수가 달라지기 때문. (정합성 문제)
     // 따라서 다대일(N:1) 연관관계에서 Fetch Join을 이용한 페이징 처리를 해주는 것이 권장 됨.
     // BatchSize 또는 EntityGraph 이용하여 페이징을 처리.
+
+    // OneToOne, ManyToOne 애너테이션을 통해 형성된 관계인 경우, 테이블 조인에 따라 데이터 수가 변경되지 않으므로 페이징 처리가 잘 됨.
+    // OneToMany, ManyToMany 애너테이션을 통해 형성된 관계인 경우, 테이블 조인에 따라 데이터가 변경되어 페이징 처리와 페치 조인이 모두 불가능.
 
     // TODO: EntityGraph 이용한 Pagination
     @EntityGraph(
