@@ -56,13 +56,10 @@ public interface BoardRepository extends JpaRepository<BoardEntity, String> {
     // TODO: Pageable 이용한 기본적인 Pagination
     Page<BoardEntity> findAll(Pageable pageable);
 
-    // TODO: Fetch Join 이용한 Pagination
-    // 정상 동작하는 방법 찾아보기. inner join 동작해서 안 됨.
-//    @Query(
-//        value = "SELECT DISTINCT board FROM BoardEntity board JOIN FETCH board.boardComments",
-//        countQuery = "SELECT COUNT(board) FROM BoardEntity board"
-//    )
-//    Page<BoardEntity> findAllByFetchJoinWithPaging(Pageable pageable);
+    // TODO: 일대다(1:N) 연관관계에서 Fetch Join을 이용한 Pagination
+    // 일대다(1:N) 연관관계에 대해 Fetch Join을 이용하여 페이징을 하면 데이터 정합성에 문제가 발생할 수 있음.
+    // 따라서 다대일(N:1) 연관관계에서 Fetch Join을 이용한 페이징 처리를 해주는 것이 권장 됨.
+    // BatchSize 또는 EntityGraph 이용하여 페이징을 처리.
 
     // TODO: EntityGraph 이용한 Pagination
     @EntityGraph(
