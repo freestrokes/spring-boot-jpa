@@ -17,7 +17,7 @@ import java.util.Set;
 @Entity
 public class BoardEntity {
 
-    // TODO: id 필드에 sequence 적용하려는 경우엔 아래와 같이 사용.
+    // NOTE: id 필드에 sequence 적용하려는 경우엔 아래와 같이 사용.
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @Column(name = "board_id", unique = true, nullable = false)
@@ -29,7 +29,7 @@ public class BoardEntity {
     @Column(name = "board_id", length = 100, unique = true, nullable = false)
     private String boardId;
 
-    // TODO: 양방향 연관관계에서 발생하는 Infinite Recursion
+    // NOTE: 양방향 연관관계에서 발생하는 Infinite Recursion
     // 컨트롤러에서 JSON으로 값을 출력하는 경우 타입을 변환해야 하는데
     // 변환되는 엔티티의 필드가 다른 엔티티를 참조하고 또 그 엔티티의 필드가 또 다른 엔티티를 참조하는 동작이 반복하여 Infinite Recursion 발생
 
@@ -43,13 +43,13 @@ public class BoardEntity {
     // 필드에 대해 직렬화/비직렬화 여부를 설정해주는 것.
     // @OneToMany 필드에 JsonManagedReference, @ManyToOne 필드에 JsonBackReference 설정.
 
-    // TODO: 연관관계의 주인
+    // NOTE: 연관관계의 주인
     // 1:N 관계에서 외래키는 항상 N 쪽에 있음.
     // 연관관계의 주인은 N 쪽의 테이블.
     // 즉, 연관관계의 주인은 외래키가 있는 곳.
     // 키의 주인이 아닌 관계의 주인인 것에 유의.
 
-    // TODO: 일대다 단방향 연관관계의 단점
+    // NOTE: 일대다 단방향 연관관계의 단점
     // 일대다에서 '다'쪽에 있는 테이블의 외래키를 관리해줘야 함.
     // 일대다 단방향 연관관계에서는 '다'쪽 테이블 필드에 @JoinColumn을 사용해서 연관관계의 주인을 명시해줘야 함.
     // 그렇게 하지 않은 경우엔 JPA에서 조인 테이블을 생성하게 됨.
@@ -69,7 +69,7 @@ public class BoardEntity {
     // 공식적으로 일대다(1:N) 양방향 매핑은 없음. 굳이 사용한다면 아래와 같은 형태로 사용.
     // ex) @JoinColumn(name = "team_id", insertable = false, updatable = false)
 
-    // TODO: N+1 문제
+    // NOTE: N+1 문제
     // 연관관계가 설정된 엔티티를 조회했을 때 한 번에 조회하지 않고
     // 조회된 데이터의 개수(N) 만큼 연관관계의 엔티티에 대해 조회 쿼리가 추가로 발생하는 문제.
     // N+1 문제는 많은 양의 쿼리가 발생했을 때 성능 저하의 원인이 됨.
@@ -87,7 +87,7 @@ public class BoardEntity {
     // spring.jpa.properties.hibernate.format_sql 주석 처리
     // spring.jpa.properties.hibernate.use_sql_comments 주석 처리
 
-    // TODO: cascadeType을 이용한 영속성 전이
+    // NOTE: cascadeType을 이용한 영속성 전이
     // 부모 엔티티 삭제시 연관관계가 매핑된 자식 엔티티가 고아 객체가 되지 않도록 하기 위해 사용.
     // cascade = CascadeType.REMOVE 또는 cascade = {CascadeType.ALL}, orphanRemoval = true 옵션을 적용.
     // 이와 같이 영속성 전이를 통해 생명주기를 관리할 수 있음.

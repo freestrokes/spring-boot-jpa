@@ -22,12 +22,12 @@ public class BoardService implements BoardRequestService {
 
     private final BoardRepository boardRepository;
 
-    // TODO: proxy 객체
+    // NOTE: proxy 객체
     // 연관관계 매핑된 객체 조회시 hibernate interceptor에 의해 proxy 객체가 생성되는 경우가 있음
     // proxy 객체의 필드 중 하나를 get 해오면 영속 상태의 객체로 매핑됨.
     // 이 부분 찾아서 확인해보기.
 
-    // TODO: @Transactional(readOnly = true)
+    // NOTE: @Transactional(readOnly = true)
     // 서비스 계층에서 트랙잭션을 시작하면 repository 계층에서도 해당 트랜잭션을 전파 받아서 사용.
     // 지연 로딩 시점까지 세션을 유지하여 LazyInitializationException 해결 가능.
     // 아래와 같이 세션 유지가 필요한 메서드에 @Transactional(readOnly = true) 붙여줌.
@@ -42,10 +42,10 @@ public class BoardService implements BoardRequestService {
     @Transactional(readOnly = true)
     public Page<BoardDto.ResponseDto> getBoards(Pageable pageable) {
 
-        // TODO: Pageable 이용한 기본적인 Pagination
+        // NOTE: Pageable 이용한 기본적인 Pagination
 //        Page<BoardEntity> findBoards = boardRepository.findAll(pageable);
 
-        // TODO: EntityGraph 이용한 Pagination
+        // NOTE: EntityGraph 이용한 Pagination
         Page<BoardEntity> findBoards = boardRepository.findAllByEntityGraphWithPaging(pageable);
 
         List<BoardDto.ResponseDto> boardsResponseDto = new ArrayList<>();
@@ -72,7 +72,7 @@ public class BoardService implements BoardRequestService {
             );
         });
 
-        // TODO: LazyInitializationException 발생하는 예시
+        // NOTE: LazyInitializationException 발생하는 예시
         // @Transactional(readOnly = true) 주석 처리해줄 것.
 //        List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll()
 //            .stream()
@@ -88,7 +88,7 @@ public class BoardService implements BoardRequestService {
 //            .collect(Collectors.toList());
 
         // 게시글 조회
-        // TODO: CASE1) 1:N 양방향 매핑 조회 후 DTO 변환
+        // NOTE: CASE1) 1:N 양방향 매핑 조회 후 DTO 변환
 //        List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll()
 //            .stream()
 //            .map(board -> {
@@ -111,7 +111,7 @@ public class BoardService implements BoardRequestService {
 //            })
 //            .collect(Collectors.toList());
 
-        // TODO: CASE2) 1:N 양방향 매핑 조회 후 DTO 변환
+        // NOTE: CASE2) 1:N 양방향 매핑 조회 후 DTO 변환
 //        List<Board> boardList = boardRepository.findAll();
 //        List<BoardDto.ResponseDto> boardsResponseDto = new ArrayList<>();
 //
@@ -156,7 +156,7 @@ public class BoardService implements BoardRequestService {
     @Transactional
     public BoardDto.ResponseDto postBoard(BoardDto.RequestDto boardRequestDto) {
 
-        // TODO: Optional을 이용한 중복 체크가 필요한 경우
+        // NOTE: Optional을 이용한 중복 체크가 필요한 경우
 //        Optional<Board> existBoard = boardRepository.findByTitle(boardRequestDto.getTitle());
 //        existBoard.ifPresent(item -> {
 //            try {
@@ -197,7 +197,7 @@ public class BoardService implements BoardRequestService {
         // 게시글 조회
         BoardEntity findBoardEntity = boardRepository.findById(boardId).orElseThrow(NoSuchElementException::new);
 
-        // TODO: @Transactional 어노테이션 사용하여 update 하려는 경우
+        // NOTE: @Transactional 어노테이션 사용하여 update 하려는 경우
         // @Transactional 어노테이션을 명시하여 repository save() 호출 없이 저장 가능.
         // board builder() 생성 없이 findBoard > updateBoard() 호출하는 것 만으로도 저장 가능
 
@@ -212,7 +212,7 @@ public class BoardService implements BoardRequestService {
             boardRequestDto.getAuthor()
         );
 
-        // TODO: @Transactional 어노테이션이 없이 update 하려는 경우
+        // NOTE: @Transactional 어노테이션이 없이 update 하려는 경우
 //        Board board = Board.builder()
 //            .title(boardRequestDto.getTitle())
 //            .content(boardRequestDto.getContent())
