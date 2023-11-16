@@ -49,7 +49,7 @@ public class PageableTests {
 
 	@Before
 	public void setup() {
-//		for (int i = 0; i < 5; i++) {
+//		for (int i = 0; i < 30; i++) {
 //			// 게시글 생성
 //			BoardEntity boardEntity = BoardEntity.builder()
 //				.title("board title test")
