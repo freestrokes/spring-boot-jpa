@@ -74,32 +74,6 @@ public class PageableTests {
 
 		Page<BoardEntity> findBoards = boardRepository.findAll(pageable);
 
-//		Page<BoardEntity> findBoards = boardRepository.findAllByEntityGraphWithPaging(pageable);
-
-//		List<BoardDto.ResponseDto> boardsResponseDto = new ArrayList<>();
-
-		// 조회한 게시글 목록에 대한 DTO 변환 (Pageable)
-//		findBoards.getContent().forEach(boardEntity -> {
-//			boardsResponseDto.add(
-//				BoardDto.ResponseDto.builder()
-//					.boardId(boardEntity.getBoardId())
-//					.title(boardEntity.getTitle())
-//					.content(boardEntity.getContent())
-//					.author(boardEntity.getAuthor())
-//					.boardComments(
-//						boardEntity.getBoardComments().stream().map(boardComment -> {
-//							return BoardCommentEntity.builder()
-//								.boardCommentId(boardComment.getBoardCommentId())
-//								.board(boardEntity)
-//								.content(boardComment.getContent())
-//								.author(boardComment.getAuthor())
-//								.build();
-//						}).collect(Collectors.toList())
-//					)
-//					.build()
-//			);
-//		});
-
 		assertThat(findBoards.getSize()).isEqualTo(10);
 
 	}
