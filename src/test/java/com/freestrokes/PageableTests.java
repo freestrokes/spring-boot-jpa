@@ -64,7 +64,6 @@ public class PageableTests {
 
 	@After
 	public void cleanAll() {
-//		boardCommentRepository.deleteAll();
 //		boardRepository.deleteAll();
 	}
 
