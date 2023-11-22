@@ -39,13 +39,7 @@ public class PageableTests {
 	private BoardRepository boardRepository;
 
 	@Autowired
-	private BoardCommentRepository boardCommentRepository;
-
-	@Autowired
 	private BoardMockService boardMockService;
-
-	@Autowired
-	private BoardCommentMockService boardCommentMockService;
 
 	@Before
 	public void setup() {
