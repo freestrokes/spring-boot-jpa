@@ -64,11 +64,8 @@ public class PageableTests {
 	@Test
 	public void contextLoads() {
 		Pageable pageable = PageRequest.of(0, 10);
-
 		Page<BoardEntity> findBoards = boardRepository.findAll(pageable);
-
 		assertThat(findBoards.getSize()).isEqualTo(10);
-
 	}
 
 }
