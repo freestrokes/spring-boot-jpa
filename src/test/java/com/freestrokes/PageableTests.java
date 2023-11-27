@@ -1,11 +1,7 @@
 package com.freestrokes;
 
-import com.freestrokes.domain.BoardCommentEntity;
 import com.freestrokes.domain.BoardEntity;
-import com.freestrokes.dto.BoardDto;
-import com.freestrokes.repository.BoardCommentRepository;
 import com.freestrokes.repository.BoardRepository;
-import com.freestrokes.service.BoardCommentMockService;
 import com.freestrokes.service.BoardMockService;
 import lombok.RequiredArgsConstructor;
 import org.junit.After;
@@ -19,10 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
