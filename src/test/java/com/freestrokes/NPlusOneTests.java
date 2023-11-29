@@ -74,6 +74,7 @@ public class NPlusOneTests {
 
 	@Test
 	public void contextLoads() {
+
 		// 즉시 로딩 N+1 확인
 //		List<BoardEntity> boards = boardRepository.findAll();
 //		assertThat(boards.size(), is(5));
