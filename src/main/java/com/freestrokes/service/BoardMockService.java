@@ -87,7 +87,6 @@ public class BoardMockService implements BoardRequestService {
 //            })
 //            .collect(Collectors.toList());
 
-        // 게시글 조회
         // NOTE: CASE1) 1:N 양방향 매핑 조회 후 DTO 변환
         List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll()
             .stream()
