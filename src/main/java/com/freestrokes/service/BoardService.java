@@ -219,7 +219,6 @@ public class BoardService implements BoardRequestService {
 //            .build();
 //
 //        findBoard.updateBoard(board);
-//
 //        boardRepository.save(findBoard);
 
         return BoardDto.ResponseDto.builder()

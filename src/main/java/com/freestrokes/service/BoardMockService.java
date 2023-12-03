@@ -219,7 +219,6 @@ public class BoardMockService implements BoardRequestService {
 //            .build();
 //
 //        findBoard.updateBoard(board);
-//
 //        boardRepository.save(findBoard);
 
         return BoardDto.ResponseDto.builder()
