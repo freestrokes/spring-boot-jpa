@@ -41,9 +41,11 @@ public interface BoardRepository extends JpaRepository<BoardEntity, String> {
     // NOTE: EntityGraph 사용 예시
     // attributePaths에는 필드명을 작성해줘야 함 (엔티티명 아님)
     // EntityGraph는 Outer Join을 사용.
+
     // 1. EntityGraphType.LOAD
     // EntityGraph에 명시한 attribute는 EAGER로 패치, 나머지 attribute는 명시한 FetchType 또는 디폴트 FetchType으로 패치
     // @OneToMany는 LAZY, @ManyToOne은 EAGER 디폴트
+
     // 2. EntityGraphType.FETCH
     // EntityGraph에 명시한 attribute는 EAGER로 패치, 나머지 attribute는 LAZY로 패치
     @EntityGraph(
