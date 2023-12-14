@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RequiredArgsConstructor
 @RunWith(SpringRunner.class)
 @SpringBootTest()
-public class PageableTests {
+public class PageableWithFetchJoinTests {
 
 	@Autowired
 	private BoardRepository boardRepository;
