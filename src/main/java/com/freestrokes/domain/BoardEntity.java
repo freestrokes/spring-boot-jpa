@@ -80,9 +80,11 @@ public class BoardEntity {
     // 즉시 로딩의 경우
     // 상위 엔티티에서 연관관계가 설정된 필드에 @OneToMany(fetch = FetchType.EAGER) 설정
     // 하위 엔티티에서 연관관계가 설정된 필드에 @ManyToOne 설정
+
     // 지연 로딩의 경우
     // 상위 엔티티에서 연관관계가 설정된 필드에 @OneToMany 설정
     // 하위 엔티티에서 연관관계가 설정된 필드에 @ManyToOne(fetch = FetchType.LAZY) 설정
+
     // spring.jpa.properties.hibernate.default_batch_fetch_size 주석 처리
     // spring.jpa.properties.hibernate.format_sql 주석 처리
     // spring.jpa.properties.hibernate.use_sql_comments 주석 처리
