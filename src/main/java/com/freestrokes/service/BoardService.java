@@ -196,8 +196,8 @@ public class BoardService implements BoardRequestService {
         // 게시글 조회
         BoardEntity findBoardEntity = boardRepository.findById(boardId).orElseThrow(NoSuchElementException::new);
 
-        // NOTE: @Transactional 어노테이션 사용하여 update 하려는 경우 (Dirty Checking)
-        // @Transactional 어노테이션을 명시하여 repository save() 호출 없이 저장 가능.
+        // NOTE: @Transactional 애너테이션 사용하여 update 하려는 경우 (Dirty Checking)
+        // @Transactional 애너테이션을 명시하여 repository save() 호출 없이 저장 가능.
         // board builder() 생성 없이 findBoard > updateBoard() 호출하는 것 만으로도 저장 가능
 
         // Dirty Checking은 상태 변경 검사를 의미.
@@ -211,7 +211,7 @@ public class BoardService implements BoardRequestService {
             boardRequestDto.getAuthor()
         );
 
-        // NOTE: @Transactional 어노테이션이 없이 update 하려는 경우
+        // NOTE: @Transactional 애너테이션 없이 update 하려는 경우
 //        Board board = Board.builder()
 //            .title(boardRequestDto.getTitle())
 //            .content(boardRequestDto.getContent())

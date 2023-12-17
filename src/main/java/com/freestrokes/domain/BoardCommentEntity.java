@@ -30,7 +30,7 @@ public class BoardCommentEntity {
     // @OneToMany, @ManyToMany -> 디폴트 패치 전략 LAZY
     // @ManyToOne, @OneToOne -> 디폴트 패치 전략 EAGER
 
-    // NOTE: @JoinColumn 어노테이션
+    // NOTE: @JoinColumn 애너테이션
     // 외래키 매핑을 위해서 사용.
     // 사용하지 않으면 JPA 내부적으로 조인 테이블을 생성해서 매핑하게 됨.
 //    @JsonBackReference

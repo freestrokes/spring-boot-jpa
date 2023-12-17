@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 // NOTE: @RequestMapping
-// 해당 컨트롤러 하위 전체 메서드에 공통 path 설정이 필요한 경우 class 상단에 어노테이션 사용.
+// 해당 컨트롤러 하위 전체 메서드에 공통 path 설정이 필요한 경우 class 상단에 애너테이션 사용.
 // @RequestMapping("/api/v1")
 @Tag(name = "Health")
 @RestController
